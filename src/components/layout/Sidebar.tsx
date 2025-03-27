@@ -1,7 +1,8 @@
 
 import React, { useState } from 'react';
-import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home } from 'lucide-react';
+import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link, useLocation } from 'react-router-dom';
 
 interface SidebarProps {
   className?: string;
@@ -9,13 +10,15 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
   
   const navItems = [
-    { icon: Home, label: 'Dashboard', active: true },
-    { icon: Leaf, label: 'Biodiversity', active: false },
-    { icon: Settings, label: 'Production', active: false },
-    { icon: Handshake, label: 'Communities', active: false },
-    { icon: Sparkles, label: 'Innovation', active: false },
+    { icon: Home, label: 'Dashboard', path: '/' },
+    { icon: Leaf, label: 'Biodiversity', path: '/biodiversity' },
+    { icon: Settings, label: 'Production', path: '/production' },
+    { icon: Handshake, label: 'Communities', path: '/communities' },
+    { icon: Sparkles, label: 'Innovation', path: '/innovation' },
+    { icon: Globe, label: 'Observatory', path: '/observatory' },
   ];
 
   return (
@@ -43,24 +46,27 @@ export function Sidebar({ className }: SidebarProps) {
       
       <nav className="flex-1 py-4">
         <ul className="space-y-2">
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <a 
-                href="#" 
-                className={cn(
-                  'flex items-center py-3 px-4 transition-all duration-200 hover:bg-bio-green-dark/50',
-                  item.active ? 'bg-bio-green-dark' : 'bg-transparent'
-                )}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className={cn('ml-4 transition-opacity duration-300', 
-                  collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
-                )}>
-                  {item.label}
-                </span>
-              </a>
-            </li>
-          ))}
+          {navItems.map((item, index) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <li key={index}>
+                <Link 
+                  to={item.path}
+                  className={cn(
+                    'flex items-center py-3 px-4 transition-all duration-200 hover:bg-bio-green-dark/50',
+                    isActive ? 'bg-bio-green-dark' : 'bg-transparent'
+                  )}
+                >
+                  <item.icon className="w-5 h-5" />
+                  <span className={cn('ml-4 transition-opacity duration-300', 
+                    collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
+                  )}>
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       
