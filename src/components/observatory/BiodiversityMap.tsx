@@ -1,124 +1,131 @@
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Info } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { mockMapPoints } from '@/data/mockMapData';
 import { useToast } from "@/components/ui/use-toast";
-import { BiodiversityMapProps, MapPoint } from '@/types/mapTypes';
-import { mockMapData, brazilRegions } from '@/data/mockMapData';
-import MapPoint from './map/MapPoint';
 import RegionSelector from './map/RegionSelector';
+import MapPointComponent from './map/MapPoint';
 import LayerControls from './map/LayerControls';
 import MapLegend from './map/MapLegend';
 import MapKeyInput from './map/MapKeyInput';
+import { type MapPoint } from '@/types/mapTypes';
 
-const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: BiodiversityMapProps) => {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const [mapInitialized, setMapInitialized] = useState(false);
+const BiodiversityMap: React.FC = () => {
+  const [mapPoints, setMapPoints] = useState<MapPoint[]>(mockMapPoints);
+  const [filter, setFilter] = useState<string>('all');
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [apiKey, setApiKey] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [showBioclimateLayer, setShowBioclimateLayer] = useState<boolean>(false);
   const { toast } = useToast();
-  const [mapApiKey, setMapApiKey] = useState<string>("");
-  const [showKeyInput, setShowKeyInput] = useState(true);
-  const [showBioclimateLayer, setShowBioclimateLayer] = useState(false);
-  
-  const filteredPoints = mockMapData.filter(point => {
-    // Filter by type if not "all"
-    if (filter !== 'all' && filter !== point.type) {
+
+  const regions = Array.from(new Set(mockMapPoints.map(point => point.region)));
+
+  const handleRegionSelect = (region: string) => {
+    setSelectedRegion(prevRegion => prevRegion === region ? null : region);
+  };
+
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter);
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const filteredPoints = mapPoints.filter(point => {
+    // Filter by type if not 'all'
+    if (filter !== 'all' && point.type !== filter) {
       return false;
     }
     
-    // Filter by region if selected
-    if (selectedRegion && selectedRegion !== 'Nacional' && point.region !== selectedRegion && point.region !== 'Nacional') {
+    // Filter by region if a region is selected
+    if (selectedRegion && point.region !== selectedRegion) {
+      return false;
+    }
+    
+    // Filter by search query
+    if (searchQuery && !point.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        !point.description.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false;
     }
     
     return true;
   });
-  
-  // Function to initialize map once API key is provided
-  const initializeMap = () => {
-    if (!mapContainer.current || !mapApiKey || mapInitialized) return;
-    
-    // Display a message about using mock map for now
-    toast({
-      title: "Mapa simulado ativado",
-      description: "Por enquanto estamos utilizando dados simulados para demonstração.",
-      duration: 5000,
-    });
-    
-    setMapInitialized(true);
-    setShowKeyInput(false);
+
+  const handleToggleBioclimateLayer = () => {
+    setShowBioclimateLayer(prev => !prev);
   };
-  
-  // Toggle bioclimate layer
-  const toggleBioclimateLayer = () => {
-    setShowBioclimateLayer(!showBioclimateLayer);
-    toast({
-      title: showBioclimateLayer ? "Camada de bioclima desativada" : "Camada de bioclima ativada",
-      description: showBioclimateLayer 
-        ? "A camada de temperatura média anual foi desativada" 
-        : "Mostrando projeções de temperatura média anual",
-    });
-  };
-  
-  // Handle map API key change
-  const handleMapApiKeyChange = (key: string) => {
-    setMapApiKey(key);
-  };
-  
+
   return (
-    <div className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden">
-      {showKeyInput ? (
-        <MapKeyInput 
-          mapApiKey={mapApiKey} 
-          onMapApiKeyChange={handleMapApiKeyChange} 
-          onInitializeMap={initializeMap} 
-        />
-      ) : null}
+    <div className="bio-card p-5 h-[500px]">
+      <h2 className="text-xl font-semibold mb-4">Mapa de Projetos e Políticas</h2>
       
-      <div ref={mapContainer} className="w-full h-full">
-        {/* Mock map visualization for demonstration */}
-        <div className="w-full h-full relative p-4 bg-bio-blue-light/20">
-          <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/b/bc/Brazil_Regions_Map.svg")' }}></div>
-          
-          {/* Bioclimate layer overlay */}
-          {showBioclimateLayer && (
-            <div className="absolute inset-0 bg-cover bg-center opacity-50 z-10" 
-                style={{ 
-                  backgroundImage: 'url("https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Bioclimate_Projections__Annual_Mean_Temperature/ImageServer/tile/0/0/0")',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundSize: 'cover'
-                }}>
-            </div>
-          )}
-          
-          <div className="relative z-20 h-full flex flex-col">
-            <div className="flex-1 relative">
-              {/* Map Regions */}
-              <RegionSelector 
-                regions={brazilRegions} 
-                selectedRegion={selectedRegion} 
-                onSelectRegion={onRegionSelect} 
-              />
-              
-              {/* Layer controls */}
-              <LayerControls 
-                showBioclimateLayer={showBioclimateLayer} 
-                onToggleBioclimateLayer={toggleBioclimateLayer} 
-              />
-              
-              {/* Map Points */}
-              {filteredPoints.map(point => (
-                <MapPoint key={point.id} point={point} />
-              ))}
-            </div>
-            
-            {/* Map Legend */}
-            <MapLegend showBioclimateLayer={showBioclimateLayer} />
-            
-            <div className="absolute bottom-4 right-4 bg-white/80 p-2 rounded-lg shadow text-xs text-gray-600 flex items-center">
-              <Info className="w-4 h-4 mr-1" />
-              <span>Mapa ilustrativo para demonstração</span>
+      <div className="flex gap-4 mb-4">
+        <div className="flex-1">
+          <label htmlFor="filter" className="block text-sm font-medium mb-1">Filtrar por Tipo</label>
+          <select 
+            id="filter"
+            value={filter}
+            onChange={e => handleFilterChange(e.target.value)}
+            className="w-full rounded-lg border border-gray-200 p-2 text-sm"
+          >
+            <option value="all">Todos</option>
+            <option value="project">Projetos</option>
+            <option value="policy">Políticas</option>
+            <option value="finance">Financiamento</option>
+          </select>
+        </div>
+        
+        <div className="flex-1">
+          <MapKeyInput onSearch={handleSearch} />
+        </div>
+      </div>
+      
+      <div className="relative border rounded-lg bg-white h-[360px] overflow-hidden">
+        {/* Map Background */}
+        <div className="absolute inset-0 bg-bio-blue-light/10">
+          {/* Map of Brazil (simplified representation) */}
+          <svg viewBox="0 0 800 600" className="w-full h-full opacity-50">
+            <path 
+              d="M200,100 C300,50 400,50 500,100 C600,150 700,250 650,350 C600,450 500,500 400,550 C300,600 200,550 150,450 C100,350 100,150 200,100 Z" 
+              fill="#e0e0e0" 
+              stroke="#cccccc" 
+              strokeWidth="2"
+            />
+          </svg>
+        </div>
+        
+        {/* Bioclimate Layer Overlay */}
+        {showBioclimateLayer && (
+          <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/30 via-orange-500/30 to-red-500/30 mix-blend-multiply">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="bg-white/80 p-2 rounded-md text-sm">
+                Camada de Temperatura Média Anual
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        
+        {/* Map Points */}
+        {filteredPoints.map(point => (
+          <MapPointComponent key={point.id} point={point} />
+        ))}
+        
+        {/* Region Selector */}
+        <RegionSelector 
+          regions={regions} 
+          selectedRegion={selectedRegion} 
+          onSelectRegion={handleRegionSelect} 
+        />
+        
+        {/* Layer Controls */}
+        <LayerControls 
+          showBioclimateLayer={showBioclimateLayer}
+          onToggleBioclimateLayer={handleToggleBioclimateLayer}
+        />
+        
+        {/* Map Legend */}
+        <MapLegend />
       </div>
     </div>
   );

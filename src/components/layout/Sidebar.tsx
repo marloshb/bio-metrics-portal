@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe } from 'lucide-react';
+import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe, TreeDeciduous } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ export function Sidebar({ className }: SidebarProps) {
     { icon: Handshake, label: 'Communities', path: '/communities' },
     { icon: Sparkles, label: 'Innovation', path: '/innovation' },
     { icon: Globe, label: 'Observatory', path: '/observatory' },
+    { icon: TreeDeciduous, label: 'Vocação Bioeconômica', path: '/vocation' },
   ];
 
   return (

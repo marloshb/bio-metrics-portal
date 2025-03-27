@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { MapPoint } from '@/types/mapTypes';
+import { type MapPoint } from '@/types/mapTypes';
 import { useToast } from "@/components/ui/use-toast";
 
 interface MapPointProps {
   point: MapPoint;
 }
 
-const MapPoint = ({ point }: MapPointProps) => {
+const MapPointComponent = ({ point }: MapPointProps) => {
   const { toast } = useToast();
 
   return (
@@ -15,7 +15,14 @@ const MapPoint = ({ point }: MapPointProps) => {
       key={point.id}
       className={`absolute w-4 h-4 rounded-full cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-150 transition-all duration-200 ${
         point.type === 'project' ? 'bg-bio-green' :
-        point.type === 'policy' ? 'bg-bio-blue' : 'bg-yellow-500'
+        point.type === 'policy' ? 'bg-bio-blue' : 
+        point.type === 'finance' ? 'bg-yellow-500' :
+        point.type === 'bioindustry' ? 'bg-purple-500' :
+        point.type === 'agriculture' ? 'bg-emerald-500' :
+        point.type === 'forestry' ? 'bg-teal-700' :
+        point.type === 'decarbonization' ? 'bg-cyan-500' :
+        point.type === 'inclusion' ? 'bg-pink-500' :
+        point.type === 'agroforestry' ? 'bg-lime-500' : 'bg-gray-500'
       }`}
       style={{ 
         left: `${(point.coordinates.lng + 75) / 150 * 100}%`, 
@@ -37,4 +44,4 @@ const MapPoint = ({ point }: MapPointProps) => {
   );
 };
 
-export default MapPoint;
+export default MapPointComponent;

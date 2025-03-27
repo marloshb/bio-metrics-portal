@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import React from "react";
 import Observatory from "./pages/Observatory";
+import BioeconomicVocationPage from "./pages/BioeconomicVocation";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/observatory" element={<Observatory />} />
+            <Route path="/vocation" element={<BioeconomicVocationPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
