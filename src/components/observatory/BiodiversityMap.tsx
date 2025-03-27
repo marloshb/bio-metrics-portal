@@ -95,6 +95,7 @@ const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: Biodiversit
   const { toast } = useToast();
   const [mapApiKey, setMapApiKey] = useState<string>("");
   const [showKeyInput, setShowKeyInput] = useState(true);
+  const [showBioclimateLayer, setShowBioclimateLayer] = useState(false);
   
   const filteredPoints = mockMapData.filter(point => {
     // Filter by type if not "all"
@@ -136,6 +137,17 @@ const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: Biodiversit
         variant: "destructive",
       });
     }
+  };
+  
+  // Toggle bioclimate layer
+  const toggleBioclimateLayer = () => {
+    setShowBioclimateLayer(!showBioclimateLayer);
+    toast({
+      title: showBioclimateLayer ? "Camada de bioclima desativada" : "Camada de bioclima ativada",
+      description: showBioclimateLayer 
+        ? "A camada de temperatura média anual foi desativada" 
+        : "Mostrando projeções de temperatura média anual",
+    });
   };
   
   // Select a region from the map
@@ -201,7 +213,18 @@ const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: Biodiversit
         <div className="w-full h-full relative p-4 bg-bio-blue-light/20">
           <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: 'url("https://upload.wikimedia.org/wikipedia/commons/b/bc/Brazil_Regions_Map.svg")' }}></div>
           
-          <div className="relative z-10 h-full flex flex-col">
+          {/* Bioclimate layer overlay */}
+          {showBioclimateLayer && (
+            <div className="absolute inset-0 bg-cover bg-center opacity-50 z-10" 
+                style={{ 
+                  backgroundImage: 'url("https://tiledimageservices.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Bioclimate_Projections__Annual_Mean_Temperature/ImageServer/tile/0/0/0")',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'cover'
+                }}>
+            </div>
+          )}
+          
+          <div className="relative z-20 h-full flex flex-col">
             <div className="flex-1 relative">
               {/* Map Regions */}
               <div className="absolute left-4 top-4 z-20 bg-white rounded-lg shadow-md p-3">
@@ -216,6 +239,22 @@ const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: Biodiversit
                       {region}
                     </button>
                   ))}
+                </div>
+              </div>
+              
+              {/* Layer controls */}
+              <div className="absolute right-4 top-4 z-20 bg-white rounded-lg shadow-md p-3">
+                <h4 className="text-sm font-medium mb-2">Camadas do Mapa</h4>
+                <div className="space-y-1">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={showBioclimateLayer} 
+                      onChange={toggleBioclimateLayer}
+                      className="rounded text-bio-green focus:ring-bio-green"
+                    />
+                    <span className="text-sm">Temperatura Média Anual</span>
+                  </label>
                 </div>
               </div>
               
@@ -260,6 +299,12 @@ const BiodiversityMap = ({ filter, selectedRegion, onRegionSelect }: Biodiversit
                 <span className="inline-block w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
                 <span className="text-xs">Recursos Financeiros</span>
               </div>
+              {showBioclimateLayer && (
+                <div className="flex items-center">
+                  <span className="inline-block w-3 h-3 bg-gradient-to-r from-blue-500 to-red-500 mr-2"></span>
+                  <span className="text-xs">Temperatura Média Anual</span>
+                </div>
+              )}
             </div>
             
             <div className="absolute bottom-4 right-4 bg-white/80 p-2 rounded-lg shadow text-xs text-gray-600 flex items-center">
