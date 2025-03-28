@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe, TreeDeciduous } from 'lucide-react';
+import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe, TreeDeciduous, BoxSelect, Compass, LineChart, Share2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -14,12 +14,12 @@ export function Sidebar({ className }: SidebarProps) {
   
   const navItems = [
     { icon: Home, label: 'Dashboard', path: '/' },
-    { icon: Leaf, label: 'Biodiversity', path: '/biodiversity' },
-    { icon: Settings, label: 'Production', path: '/production' },
-    { icon: Handshake, label: 'Communities', path: '/communities' },
-    { icon: Sparkles, label: 'Innovation', path: '/innovation' },
-    { icon: Globe, label: 'Observatory', path: '/observatory' },
-    { icon: TreeDeciduous, label: 'Vocação Bioeconômica', path: '/vocation' },
+    { icon: Globe, label: 'Painéis Setoriais', path: '/observatory' },
+    { icon: BoxSelect, label: 'HUB Bioeconômico', path: '/hub' },
+    { icon: TreeDeciduous, label: 'BioVocação', path: '/vocation' },
+    { icon: Compass, label: 'Estratégias', path: '/strategies' },
+    { icon: Share2, label: 'Cadeia de Valor', path: '/value-chain' },
+    { icon: LineChart, label: 'Relatórios', path: '/reports' },
   ];
 
   return (
@@ -34,7 +34,7 @@ export function Sidebar({ className }: SidebarProps) {
           <span className={cn('ml-2 font-bold text-lg transition-opacity duration-300', 
             collapsed ? 'opacity-0 w-0' : 'opacity-100'
           )}>
-            Bioeconomy
+            BioECO
           </span>
         </div>
         <button 

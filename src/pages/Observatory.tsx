@@ -32,7 +32,7 @@ const Observatory = () => {
         <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
           <div className="flex justify-between items-center py-4 px-6">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-800">Observatório e Paineis Setoriais</h1>
+              <h1 className="text-2xl font-semibold text-gray-800">Observatório BioECO</h1>
               <p className="text-sm text-gray-500">Monitoramento georreferenciado de iniciativas da bioeconomia</p>
             </div>
             

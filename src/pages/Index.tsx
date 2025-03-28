@@ -5,7 +5,7 @@ import BiodiversityMap from '@/components/dashboard/BiodiversityMap';
 import SustainabilityChart from '@/components/dashboard/SustainabilityChart';
 import CommunityTracker from '@/components/dashboard/CommunityTracker';
 import InnovationHub from '@/components/dashboard/InnovationHub';
-import { Bell, Search, BarChart3 } from 'lucide-react';
+import { Bell, Search, BarChart3, Info, Calendar, Leaf, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Index = () => {
@@ -29,8 +29,10 @@ const Index = () => {
         <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center py-4 px-4 md:px-6 gap-3">
             <div>
-              <h1 className="text-xl md:text-2xl font-semibold text-gray-800">Bioeconomy Dashboard</h1>
-              <p className="text-xs md:text-sm text-gray-500">Welcome back, explore today's metrics</p>
+              <h1 className="text-xl md:text-2xl font-semibold text-gray-800">BioECO - Sistema Digital de Bioeconomia</h1>
+              <p className="text-xs md:text-sm text-gray-500">
+                Monitoramento e gestão da bioeconomia brasileira baseado no Decreto nº 12.044
+              </p>
             </div>
             
             <div className="flex items-center space-x-2 md:space-x-4">
@@ -38,7 +40,7 @@ const Index = () => {
                 <Search className="w-4 h-4 md:w-5 md:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 <input 
                   type="text" 
-                  placeholder="Search..." 
+                  placeholder="Buscar projetos ou recursos..." 
                   className="w-full md:w-auto pl-10 pr-4 py-1.5 md:py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-bio-green/30 transition-all text-sm"
                 />
               </div>
@@ -51,26 +53,112 @@ const Index = () => {
           </div>
         </header>
         
+        {/* Hero Section - Decreto Information */}
+        <div className="bg-gradient-to-r from-bio-green/20 to-bio-blue/20 p-4 md:p-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
+              <div className="bg-white p-3 md:p-4 rounded-full">
+                <Leaf className="w-8 h-8 md:w-10 md:h-10 text-bio-green" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-lg md:text-xl font-medium">Decreto nº 12.044, de 5 de junho de 2024</h2>
+                <p className="text-sm md:text-base mt-1">Institui a Estratégia Nacional de Bioeconomia, promovendo um modelo de desenvolvimento baseado em sustentabilidade, biodiversidade, inclusão e inovação.</p>
+              </div>
+              <button className="bio-button-secondary flex items-center text-xs md:text-sm py-1.5 px-3 mt-2 md:mt-0">
+                <Info className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                <span>Saiba mais</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        
         {/* Main content */}
         <main className="px-3 md:px-6 py-3 md:py-6">
           {/* Date and filters */}
           <div className="flex flex-col sm:flex-row sm:justify-between mb-4 md:mb-6 gap-3">
             <div>
-              <p className="text-xs sm:text-sm text-gray-500">Today's Date</p>
-              <p className="text-sm md:text-lg font-medium">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <p className="text-xs sm:text-sm text-gray-500">Data de hoje</p>
+              <p className="text-sm md:text-base font-medium">{new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
             </div>
             
             <div className="flex space-x-2 sm:space-x-3">
               <button className="bio-button flex items-center text-xs md:text-sm py-1 px-3 md:px-4">
-                <BarChart3 className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                <span>Export Report</span>
+                <Download className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                <span>Exportar Relatório</span>
               </button>
               <select className="text-xs md:text-sm px-2 md:px-4 py-1 md:py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-bio-green/30 bg-white">
-                <option>Last 7 Days</option>
-                <option>Last 30 Days</option>
-                <option>Last Quarter</option>
-                <option>Last Year</option>
+                <option>Últimos 7 dias</option>
+                <option>Últimos 30 dias</option>
+                <option>Último trimestre</option>
+                <option>Último ano</option>
               </select>
+            </div>
+          </div>
+          
+          {/* Dashboard cards - summary */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6 mb-6">
+            <div className="bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">Total de Projetos</h3>
+                  <p className="text-2xl font-semibold mt-1">342</p>
+                </div>
+                <div className="bg-bio-green/10 p-2 rounded-md">
+                  <BarChart3 className="h-6 w-6 text-bio-green" />
+                </div>
+              </div>
+              <div className="mt-2 text-xs text-green-600 flex items-center">
+                <span className="font-medium">+12%</span>
+                <span className="ml-1 text-gray-500">desde o mês passado</span>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">Financiamentos Ativos</h3>
+                  <p className="text-2xl font-semibold mt-1">R$ 1,2B</p>
+                </div>
+                <div className="bg-blue-500/10 p-2 rounded-md">
+                  <Leaf className="h-6 w-6 text-blue-500" />
+                </div>
+              </div>
+              <div className="mt-2 text-xs text-green-600 flex items-center">
+                <span className="font-medium">+8%</span>
+                <span className="ml-1 text-gray-500">desde o último trimestre</span>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">Comunidades Envolvidas</h3>
+                  <p className="text-2xl font-semibold mt-1">158</p>
+                </div>
+                <div className="bg-amber-500/10 p-2 rounded-md">
+                  <Calendar className="h-6 w-6 text-amber-500" />
+                </div>
+              </div>
+              <div className="mt-2 text-xs text-green-600 flex items-center">
+                <span className="font-medium">+24</span>
+                <span className="ml-1 text-gray-500">novas comunidades</span>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-500">Novas Políticas</h3>
+                  <p className="text-2xl font-semibold mt-1">7</p>
+                </div>
+                <div className="bg-purple-500/10 p-2 rounded-md">
+                  <Info className="h-6 w-6 text-purple-500" />
+                </div>
+              </div>
+              <div className="mt-2 text-xs text-blue-600 flex items-center">
+                <span className="font-medium">Acompanhar</span>
+                <span className="ml-1 text-gray-500">atualizações recentes</span>
+              </div>
             </div>
           </div>
           
