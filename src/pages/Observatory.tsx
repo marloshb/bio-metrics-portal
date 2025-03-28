@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import SectionTitle from '@/components/ui/SectionTitle';
@@ -89,11 +88,7 @@ const Observatory = () => {
               </div>
               
               <div className="h-[500px] mb-4 rounded-lg overflow-hidden">
-                <BiodiversityMap 
-                  filter={mapFilter} 
-                  selectedRegion={selectedRegion}
-                  onRegionSelect={setSelectedRegion}
-                />
+                <BiodiversityMap />
               </div>
               
               {selectedRegion && (
