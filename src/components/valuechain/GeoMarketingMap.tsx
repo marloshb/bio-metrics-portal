@@ -1,19 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
-import { Filter, BarChart2, Download, Layers, Search, Info, Zap, Map as MapIcon } from 'lucide-react';
-import { mockGeoMarketingData } from '@/data/mockValueChainData';
-import { GeoMarketingData } from '@/types/valueChainTypes';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
-import { formatCurrency } from '@/lib/utils';
-import { MAPBOX_TOKEN } from '@/constants/mapConfig';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import React from 'react';
+import { mockGeoMarketingData } from '@/data/valuechain';
 
 export const GeoMarketingMap = () => {
   const [productFilter, setProductFilter] = useState<string>('Todos');
@@ -25,7 +11,6 @@ export const GeoMarketingMap = () => {
   const [view, setView] = useState<'map' | 'data'>('map');
   const [selectedPoint, setSelectedPoint] = useState<GeoMarketingData | null>(null);
   
-  // Get unique product categories and periods for filters
   const uniqueProducts = ['Todos', ...Array.from(
     new Set(mockGeoMarketingData.map(data => data.productCategory))
   ).sort()];
@@ -33,7 +18,6 @@ export const GeoMarketingMap = () => {
   const uniquePeriods = ['Atual', 'Último Trimestre', 'Último Semestre', 'Último Ano'];
   const uniqueRegions = Array.from(new Set(mockGeoMarketingData.map(data => data.region))).sort();
   
-  // Filter geomarketing data based on filters
   const filteredData = mockGeoMarketingData.filter(data => {
     const matchesSearch = searchTerm ? 
       data.productCategory.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -278,9 +262,7 @@ export const GeoMarketingMap = () => {
           <Card className="col-span-1 lg:col-span-2 h-[500px] relative overflow-hidden">
             <CardContent className="p-0 h-full">
               <div className="absolute inset-0 bg-[#F3F2F1]">
-                {/* Map placeholder - in real implementation this would be an actual ESRI map */}
                 <div className="relative h-full w-full">
-                  {/* Brazil map outline (simplified SVG) */}
                   <svg viewBox="0 0 800 800" className="h-full w-full p-4">
                     <path 
                       d="M200,100 C300,50 400,50 500,100 C600,150 700,250 650,350 C600,450 500,500 400,550 C300,600 200,550 150,450 C100,350 100,150 200,100 Z" 
@@ -289,7 +271,6 @@ export const GeoMarketingMap = () => {
                       strokeWidth="2"
                     />
                     
-                    {/* Heat map visualization */}
                     {showSupply && filteredData.map((data, index) => (
                       <circle 
                         key={`supply-${index}`}
@@ -319,7 +300,6 @@ export const GeoMarketingMap = () => {
                     ))}
                   </svg>
                   
-                  {/* Map overlay with instructions or popups */}
                   <div className="absolute top-2 right-2 bg-white rounded-md shadow p-2 text-xs">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-3 h-3 rounded-full bg-green-500"></div>

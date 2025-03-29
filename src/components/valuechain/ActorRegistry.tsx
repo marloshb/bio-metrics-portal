@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Building, Mail, Phone, Plus, Calendar, Award, Tag, Globe } from 'lucide-react';
-import { mockActors } from '@/data/mockValueChainData';
+import { mockActors } from '@/data/valuechain';
 import { Actor } from '@/types/valueChainTypes';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -484,6 +483,3 @@ const ActorCard = ({ actor }: { actor: Actor }) => {
     </Card>
   );
 };
-
-// Adding the missing Globe icon import since it's used in the component
-import { Globe } from 'lucide-react';
