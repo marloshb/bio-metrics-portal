@@ -14,7 +14,9 @@ import {
   Star,
   Check,
   ExternalLink,
-  Clock
+  Clock,
+  Play,
+  PlayCircle
 } from 'lucide-react';
 import { mockProductOfferings, mockMarketplaceTransactions } from '@/data/valuechain';
 import { ProductOffering } from '@/types/valueChainTypes';
@@ -26,6 +28,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { formatCurrency } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export const BioMarketplace = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,6 +39,7 @@ export const BioMarketplace = () => {
   const [sortBy, setSortBy] = useState<'price' | 'rating' | 'date'>('date');
   const [activeTab, setActiveTab] = useState<'offerings' | 'transactions'>('offerings');
   const [selectedProduct, setSelectedProduct] = useState<ProductOffering | null>(null);
+  const isMobile = useIsMobile();
 
   // Get unique categories for filters
   const uniqueCategories = Array.from(
@@ -47,7 +51,7 @@ export const BioMarketplace = () => {
     // Search term filter
     if (searchTerm && !product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       !product.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      !product.sellerName.toLowerCase().includes(searchTerm.toLowerCase())) {
+      !product.sellerName?.toLowerCase().includes(searchTerm.toLowerCase())) {
       return false;
     }
 
@@ -80,7 +84,7 @@ export const BioMarketplace = () => {
     } else if (sortBy === 'rating') {
       return (b.rating || 0) - (a.rating || 0);
     } else { // date
-      return new Date(b.listedDate).getTime() - new Date(a.listedDate).getTime();
+      return new Date(b.listedDate || '').getTime() - new Date(a.listedDate || '').getTime();
     }
   });
 
@@ -160,11 +164,11 @@ export const BioMarketplace = () => {
           </div>
         </div>
 
-        {/* Product grid */}
+        {/* Product VideoCard grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {sortedOfferings.length > 0 ? (
             sortedOfferings.map((product) => (
-              <ProductCard key={product.id} product={product} onSelect={setSelectedProduct} />
+              <ProductVideoCard key={product.id} product={product} onSelect={setSelectedProduct} />
             ))
           ) : (
             <div className="col-span-3 text-center py-10 bg-gray-50 rounded-lg">
@@ -187,8 +191,11 @@ export const BioMarketplace = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                    <ShoppingBag className="h-16 w-16 text-gray-400" />
+                  <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-4 relative overflow-hidden group">
+                    <ShoppingBag className="h-16 w-16 text-gray-400 group-hover:opacity-0 transition-opacity" />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <PlayCircle className="h-16 w-16 text-white" />
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2 mb-2">
@@ -217,7 +224,7 @@ export const BioMarketplace = () => {
 
                     <div className="flex items-center gap-2 text-gray-600">
                       <Clock className="h-4 w-4" />
-                      <span>Anunciado em {new Date(selectedProduct.listedDate).toLocaleDateString('pt-BR')}</span>
+                      <span>Anunciado em {new Date(selectedProduct.listedDate || '').toLocaleDateString('pt-BR')}</span>
                     </div>
 
                     {selectedProduct.availableQuantity && (
@@ -311,67 +318,50 @@ export const BioMarketplace = () => {
           </div>
         </div>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg text-[#005A9C]">Transações Recentes</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-gray-50 text-left">
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Data</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Produto</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Vendedor</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Comprador</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Quantidade</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Valor Total</th>
-                    <th className="p-3 border-b text-sm font-medium text-gray-500">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {mockMarketplaceTransactions.map((transaction, index) => (
-                    <tr key={index} className="hover:bg-gray-50 border-b border-gray-100">
-                      <td className="p-3 text-sm">{new Date(transaction.date || transaction.createdAt).toLocaleDateString('pt-BR')}</td>
-                      <td className="p-3 text-sm font-medium">{transaction.productName}</td>
-                      <td className="p-3 text-sm">{transaction.seller}</td>
-                      <td className="p-3 text-sm">{transaction.buyer}</td>
-                      <td className="p-3 text-sm">{transaction.quantity} {transaction.unit}</td>
-                      <td className="p-3 text-sm font-medium">{formatCurrency(transaction.totalValue || transaction.initialPrice * transaction.quantity)}</td>
-                      <td className="p-3 text-sm">
-                        <Badge className={
-                          transaction.status === 'Vendido' ? 'bg-green-100 text-green-800' :
-                            transaction.status === 'Disponível' ? 'bg-amber-100 text-amber-800' :
-                              transaction.status === 'Em negociação' ? 'bg-blue-100 text-blue-800' :
-                                'bg-red-100 text-red-800'
-                        }>
-                          {transaction.status}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {mockMarketplaceTransactions.map((transaction, index) => (
+            <TransactionVideoCard key={index} transaction={transaction} />
+          ))}
+        </div>
       </TabsContent>
     </div>
   );
 };
 
-// Product Card Component
-const ProductCard = ({ 
+// Product VideoCard Component
+const ProductVideoCard = ({ 
   product, 
   onSelect 
 }: { 
   product: ProductOffering; 
   onSelect: (product: ProductOffering) => void;
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-all hover:-translate-y-1 duration-200">
-      <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-        <ShoppingBag className="h-12 w-12 text-gray-400" />
+    <Card 
+      className="overflow-hidden hover:shadow-md transition-all hover:-translate-y-1 duration-200 animate-fade-in"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onSelect(product)}
+    >
+      <div className="aspect-video bg-gray-100 relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <ShoppingBag className={`h-12 w-12 text-gray-400 transition-all duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`} />
+        </div>
+        
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          <PlayCircle className="h-16 w-16 text-white/90" />
+        </div>
+        
+        <div className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent text-white transition-transform duration-300 ${isHovered ? 'translate-y-0' : 'translate-y-full'}`}>
+          <h3 className="font-medium text-lg truncate">{product.name}</h3>
+          <p className="text-sm text-gray-200 line-clamp-2">{product.description}</p>
+        </div>
+        
+        <Badge className="absolute top-2 right-2 bg-[#0078D4] hover:bg-[#0078D4]">
+          {product.category}
+        </Badge>
       </div>
 
       <CardContent className="p-4">
@@ -386,8 +376,6 @@ const ProductCard = ({
           <MapPin className="w-3.5 h-3.5" />
           <span className="text-xs">{product.location}</span>
         </div>
-
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
 
         <div className="mt-3">
           <div className="flex justify-between items-baseline">
@@ -411,11 +399,109 @@ const ProductCard = ({
       <CardFooter className="px-4 py-3 bg-gray-50 flex justify-between border-t">
         <div className="flex items-center text-xs text-gray-500">
           <Calendar className="w-3.5 h-3.5 mr-1" />
-          <span>{new Date(product.listedDate).toLocaleDateString('pt-BR')}</span>
+          <span>{new Date(product.listedDate || '').toLocaleDateString('pt-BR')}</span>
         </div>
 
-        <Button size="sm" onClick={() => onSelect(product)} className="bg-[#0078D4] hover:bg-[#005A9C]">
+        <Button size="sm" className="bg-[#0078D4] hover:bg-[#005A9C]">
           Ver detalhes
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+// Transaction VideoCard Component
+const TransactionVideoCard = ({ transaction }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  // Determine status color
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'Vendido':
+        return 'bg-green-100 text-green-800';
+      case 'Disponível':
+        return 'bg-amber-100 text-amber-800';
+      case 'Em negociação':
+        return 'bg-blue-100 text-blue-800';
+      default:
+        return 'bg-red-100 text-red-800';
+    }
+  };
+  
+  return (
+    <Card 
+      className="overflow-hidden hover:shadow-md transition-all hover:-translate-y-1 duration-200 animate-fade-in"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="aspect-video bg-gray-100 relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <DollarSign className={`h-12 w-12 text-gray-400 transition-all duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`} />
+        </div>
+        
+        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          <PlayCircle className="h-16 w-16 text-white/90" />
+        </div>
+        
+        <div className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent text-white transition-transform duration-300 ${isHovered ? 'translate-y-0' : 'translate-y-full'}`}>
+          <h3 className="font-medium text-lg truncate">{transaction.productName}</h3>
+          <p className="text-sm text-gray-200">
+            {transaction.seller} → {transaction.buyer || 'Aguardando comprador'}
+          </p>
+        </div>
+        
+        <Badge className={`absolute top-2 right-2 ${getStatusColor(transaction.status)}`}>
+          {transaction.status}
+        </Badge>
+      </div>
+
+      <CardContent className="p-4">
+        <div className="flex justify-between items-start">
+          <h3 className="font-medium text-lg">{transaction.productName}</h3>
+          <Badge className={getStatusColor(transaction.status)}>
+            {transaction.status}
+          </Badge>
+        </div>
+
+        <div className="mt-2 space-y-1">
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">Vendedor:</span>
+            <span className="font-medium">{transaction.seller}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">Comprador:</span>
+            <span className="font-medium">{transaction.buyer || '—'}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">Quantidade:</span>
+            <span>{transaction.quantity} {transaction.unit}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-500">Valor Total:</span>
+            <span className="font-medium">{formatCurrency(transaction.totalValue || transaction.initialPrice * transaction.quantity)}</span>
+          </div>
+        </div>
+
+        {transaction.traceabilityCode && (
+          <div className="mt-3 text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center justify-between">
+            <span>Código de Rastreabilidade:</span>
+            <span className="font-mono">{transaction.traceabilityCode}</span>
+          </div>
+        )}
+      </CardContent>
+
+      <CardFooter className="px-4 py-3 bg-gray-50 flex justify-between border-t">
+        <div className="flex items-center text-xs text-gray-500">
+          <Calendar className="w-3.5 h-3.5 mr-1" />
+          <span>{new Date(transaction.date || transaction.createdAt).toLocaleDateString('pt-BR')}</span>
+        </div>
+
+        <Button 
+          size="sm" 
+          variant="outline" 
+          className="text-[#0078D4] border-[#0078D4] hover:bg-[#0078D4] hover:text-white"
+        >
+          Detalhes
         </Button>
       </CardFooter>
     </Card>
