@@ -127,5 +127,59 @@ export const mockGeoMarketingData: GeoMarketingData[] = [
       direction: "up",
       percentage: 28
     }
+  },
+  {
+    id: "gm8",
+    productCategory: "Produtos Florestais Não-Madeireiros",
+    region: "Sul",
+    supplyVolume: 2200,
+    demandVolume: 1800,
+    averagePrice: 42,
+    unit: "kg",
+    coordinates: {
+      lat: -25.43,
+      lng: -49.27
+    },
+    period: "Junho 2024",
+    trends: {
+      direction: "down",
+      percentage: 8
+    }
+  },
+  {
+    id: "gm9",
+    productCategory: "Sementes Certificadas",
+    region: "Norte",
+    supplyVolume: 750,
+    demandVolume: 1200,
+    averagePrice: 85,
+    unit: "kg",
+    coordinates: {
+      lat: -9.97,
+      lng: -67.81
+    },
+    period: "Junho 2024",
+    trends: {
+      direction: "up",
+      percentage: 40
+    }
+  },
+  {
+    id: "gm10",
+    productCategory: "Fibras Naturais",
+    region: "Nordeste",
+    supplyVolume: 3200,
+    demandVolume: 4100,
+    averagePrice: 28,
+    unit: "kg",
+    coordinates: {
+      lat: -9.66,
+      lng: -35.73
+    },
+    period: "Junho 2024",
+    trends: {
+      direction: "up",
+      percentage: 12
+    }
   }
 ];

@@ -1,109 +1,120 @@
 
-import React, { useState } from 'react';
-import { DollarSign, Calendar, PlayCircle } from 'lucide-react';
+import React from 'react';
+import { Calendar, DollarSign, CheckCircle2, Clock, XCircle, BarChart2, Package } from 'lucide-react';
 import { MarketplaceTransaction } from '@/types/valueChainTypes';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { formatCurrency } from '@/lib/utils';
 
 interface TransactionVideoCardProps {
   transaction: MarketplaceTransaction;
 }
 
-const TransactionVideoCard: React.FC<TransactionVideoCardProps> = ({ transaction }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  // Determine status color
-  const getStatusColor = (status: string) => {
-    switch(status) {
+const TransactionVideoCard = ({ transaction }: TransactionVideoCardProps) => {
+  // Status styling and icons
+  const getStatusInfo = (status: string) => {
+    switch (status) {
       case 'Vendido':
-        return 'bg-green-100 text-green-800';
-      case 'Disponível':
-        return 'bg-amber-100 text-amber-800';
+        return { 
+          icon: CheckCircle2, 
+          color: 'bg-green-100 text-green-700 border-green-200',
+          iconColor: 'text-green-500'
+        };
       case 'Em negociação':
-        return 'bg-blue-100 text-blue-800';
+        return { 
+          icon: Clock, 
+          color: 'bg-amber-100 text-amber-700 border-amber-200',
+          iconColor: 'text-amber-500'
+        };
+      case 'Cancelado':
+        return { 
+          icon: XCircle, 
+          color: 'bg-red-100 text-red-700 border-red-200',
+          iconColor: 'text-red-500'
+        };
+      case 'Disponível':
       default:
-        return 'bg-red-100 text-red-800';
+        return { 
+          icon: Package, 
+          color: 'bg-blue-100 text-blue-700 border-blue-200',
+          iconColor: 'text-blue-500'
+        };
     }
   };
-  
+
+  const { icon: StatusIcon, color: statusColor, iconColor } = getStatusInfo(transaction.status);
+
+  // Random visualization image for transactions
+  const getRandomImage = () => {
+    const images = [
+      "https://images.unsplash.com/photo-1587049352847-de8e5e973666", // Castanhas
+      "https://images.unsplash.com/photo-1587049352851-8d4e89133924", // Mel
+      "https://images.unsplash.com/photo-1617952431087-4ea1829e4e05", // Óleo
+      "https://images.unsplash.com/photo-1533090161767-e6ffed986c88", // Madeira
+      "https://images.unsplash.com/photo-1599321329467-80d1cf266633", // Sementes
+    ];
+    return images[Math.floor(Math.random() * images.length)];
+  };
+
   return (
-    <Card 
-      className="overflow-hidden hover:shadow-md transition-all hover:-translate-y-1 duration-200 animate-fade-in"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="aspect-video bg-gray-100 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <DollarSign className={`h-12 w-12 text-gray-400 transition-all duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`} />
+    <Card className="overflow-hidden group cursor-pointer transition-all hover:shadow-lg">
+      <CardContent className="p-0">
+        <div className="relative h-40 bg-gray-100 overflow-hidden">
+          <img 
+            src={getRandomImage()} 
+            alt={transaction.productName} 
+            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+          />
+          
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+            <h3 className="font-medium text-white">{transaction.productName}</h3>
+            <div className="flex justify-between items-center mt-1">
+              <Badge className={`${statusColor} border flex items-center gap-1`}>
+                <StatusIcon className={`h-3 w-3 ${iconColor}`} />
+                {transaction.status}
+              </Badge>
+              
+              <Badge className="bg-white/80 text-gray-800">
+                {transaction.quantity} {transaction.unit}
+              </Badge>
+            </div>
+          </div>
+
+          <div className="absolute top-2 right-2">
+            {transaction.traceabilityCode && (
+              <Badge className="bg-white/90 text-green-700 hover:bg-white flex items-center gap-1">
+                <BarChart2 className="h-3 w-3" />
+                Rastreável
+              </Badge>
+            )}
+          </div>
         </div>
         
-        <div className={`absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-          <PlayCircle className="h-16 w-16 text-white/90" />
-        </div>
-        
-        <div className={`absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent text-white transition-transform duration-300 ${isHovered ? 'translate-y-0' : 'translate-y-full'}`}>
-          <h3 className="font-medium text-lg truncate">{transaction.productName}</h3>
-          <p className="text-sm text-gray-200">
-            {transaction.seller} → {transaction.buyer || 'Aguardando comprador'}
-          </p>
-        </div>
-        
-        <Badge className={`absolute top-2 right-2 ${getStatusColor(transaction.status)}`}>
-          {transaction.status}
-        </Badge>
-      </div>
-
-      <CardContent className="p-4">
-        <div className="flex justify-between items-start">
-          <h3 className="font-medium text-lg">{transaction.productName}</h3>
-          <Badge className={getStatusColor(transaction.status)}>
-            {transaction.status}
-          </Badge>
-        </div>
-
-        <div className="mt-2 space-y-1">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Vendedor:</span>
-            <span className="font-medium">{transaction.seller}</span>
+        <div className="p-4">
+          <div className="flex items-center text-gray-500 text-sm mb-2">
+            <Calendar className="h-3.5 w-3.5 mr-1.5" />
+            <span>{new Date(transaction.date || '').toLocaleDateString('pt-BR')}</span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Comprador:</span>
-            <span className="font-medium">{transaction.buyer || '—'}</span>
+          
+          <div className="flex items-center text-gray-900 text-lg font-semibold">
+            <DollarSign className="h-4 w-4 mr-1" />
+            <span>{formatCurrency(transaction.finalPrice || transaction.initialPrice)}</span>
+            <span className="text-sm font-normal text-gray-500 ml-1">/{transaction.unit}</span>
           </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Quantidade:</span>
-            <span>{transaction.quantity} {transaction.unit}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Valor Total:</span>
-            <span className="font-medium">{formatCurrency(transaction.totalValue || transaction.initialPrice * transaction.quantity)}</span>
+          
+          <div className="flex justify-between items-center mt-3">
+            <Badge variant="outline" className="text-gray-500">
+              Total: {formatCurrency(transaction.totalValue || 0)}
+            </Badge>
+            
+            {transaction.buyerId && (
+              <Badge className="bg-blue-100 text-blue-700 border border-blue-200">
+                Comprador: ID {transaction.buyer.substring(0, 3)}...
+              </Badge>
+            )}
           </div>
         </div>
-
-        {transaction.traceabilityCode && (
-          <div className="mt-3 text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center justify-between">
-            <span>Código de Rastreabilidade:</span>
-            <span className="font-mono">{transaction.traceabilityCode}</span>
-          </div>
-        )}
       </CardContent>
-
-      <CardFooter className="px-4 py-3 bg-gray-50 flex justify-between border-t">
-        <div className="flex items-center text-xs text-gray-500">
-          <Calendar className="w-3.5 h-3.5 mr-1" />
-          <span>{new Date(transaction.date || transaction.createdAt).toLocaleDateString('pt-BR')}</span>
-        </div>
-
-        <Button 
-          size="sm" 
-          variant="outline" 
-          className="text-[#0078D4] border-[#0078D4] hover:bg-[#0078D4] hover:text-white"
-        >
-          Detalhes
-        </Button>
-      </CardFooter>
     </Card>
   );
 };

@@ -83,5 +83,38 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     productName: "Baru",
     unit: "kg",
     totalValue: 60 * 100
+  },
+  {
+    id: "tx6",
+    productOffering: "p10",
+    seller: "7",
+    buyer: "3",
+    initialPrice: 0.8,
+    finalPrice: 0.75,
+    quantity: 10000,
+    status: "Vendido",
+    createdAt: "2024-05-15T08:20:00Z",
+    updatedAt: "2024-05-18T14:10:00Z",
+    completedAt: "2024-05-18T14:10:00Z",
+    traceabilityCode: "TX1805181410",
+    date: "2024-05-18T14:10:00Z",
+    productName: "Embalagens Biodegradáveis",
+    unit: "unidades",
+    totalValue: 0.75 * 10000
+  },
+  {
+    id: "tx7",
+    productOffering: "p11",
+    seller: "8",
+    buyer: "",
+    initialPrice: 15,
+    quantity: 200,
+    status: "Cancelado",
+    createdAt: "2024-05-25T16:45:00Z",
+    updatedAt: "2024-05-29T09:30:00Z",
+    date: "2024-05-29T09:30:00Z",
+    productName: "Açúcar Mascavo Orgânico",
+    unit: "kg",
+    totalValue: 15 * 200
   }
 ];
