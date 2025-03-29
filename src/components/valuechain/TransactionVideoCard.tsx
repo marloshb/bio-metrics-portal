@@ -120,4 +120,3 @@ const TransactionVideoCard = ({ transaction }: TransactionVideoCardProps) => {
 };
 
 export default TransactionVideoCard;
-

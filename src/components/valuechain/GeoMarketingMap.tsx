@@ -270,185 +270,168 @@ export const GeoMarketingMap = () => {
             </CardContent>
           </Card>
           
-          <Card className="col-span-1 lg:col-span-2 h-[500px] relative overflow-hidden">
-            <CardContent className="p-0 h-full">
-              <div className="absolute inset-0 bg-[#F3F2F1]">
-                <div className="relative h-full w-full">
-                  <svg viewBox="0 0 800 800" className="h-full w-full p-4">
-                    <path 
-                      d="M200,100 C300,50 400,50 500,100 C600,150 700,250 650,350 C600,450 500,500 400,550 C300,600 200,550 150,450 C100,350 100,150 200,100 Z" 
-                      fill="#ffffff" 
-                      stroke="#cccccc" 
-                      strokeWidth="2"
-                    />
-                    
-                    {showSupply && filteredData.map((data, index) => (
-                      <circle 
-                        key={`supply-${index}`}
-                        cx={data.coordinates.lng * 5 + 300} 
-                        cy={data.coordinates.lat * 5 + 300}
-                        r={Math.sqrt(data.supplyVolume) / 3 + 5}
-                        fill="rgba(34, 197, 94, 0.4)"
-                        stroke="#22c55e"
-                        strokeWidth="1"
-                        onClick={() => setSelectedPoint(data)}
-                        className="cursor-pointer hover:stroke-[#005A9C] hover:stroke-[3]"
-                      />
-                    ))}
-                    
-                    {showDemand && filteredData.map((data, index) => (
-                      <circle 
-                        key={`demand-${index}`}
-                        cx={data.coordinates.lng * 5 + 300} 
-                        cy={data.coordinates.lat * 5 + 300}
-                        r={Math.sqrt(data.demandVolume) / 3 + 5}
-                        fill="rgba(59, 130, 246, 0.4)"
-                        stroke="#3b82f6"
-                        strokeWidth="1"
-                        onClick={() => setSelectedPoint(data)}
-                        className="cursor-pointer hover:stroke-[#005A9C] hover:stroke-[3]"
-                      />
-                    ))}
-                  </svg>
+          {/* Simplified map */}
+          <div className="col-span-1 lg:col-span-2 bg-gray-100 rounded-lg overflow-hidden h-[500px] relative">
+            {/* Map placeholder */}
+            <div className="absolute inset-0 bg-[#F3F2F1]">
+              <svg viewBox="0 0 800 600" className="w-full h-full opacity-60">
+                <path 
+                  d="M200,100 C300,50 400,50 500,100 C600,150 700,250 650,350 C600,450 500,500 400,550 C300,600 200,550 150,450 C100,350 100,150 200,100 Z" 
+                  fill="#e0e0e0" 
+                  stroke="#cccccc" 
+                  strokeWidth="2"
+                />
+              </svg>
+              
+              {/* Supply points */}
+              {showSupply && filteredData.map((point, index) => (
+                <div 
+                  key={`supply-${index}`}
+                  className="absolute w-4 h-4 rounded-full bg-green-500 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                  style={{ 
+                    left: `${point.coordinates.lng}%`, 
+                    top: `${point.coordinates.lat}%`,
+                    opacity: 0.8,
+                  }}
+                  onClick={() => setSelectedPoint(point)}
+                >
+                  <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-2 rounded shadow-lg w-48 z-10 text-xs hidden group-hover:block">
+                    <p className="font-medium">{point.productCategory}</p>
+                    <p>Oferta: {point.supplyVolume.toLocaleString()} un.</p>
+                    <p>Preço médio: {formatCurrency(point.averagePrice)}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Demand points */}
+              {showDemand && filteredData.map((point, index) => (
+                <div 
+                  key={`demand-${index}`}
+                  className="absolute w-4 h-4 rounded-full bg-blue-500 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                  style={{ 
+                    left: `${point.coordinates.lng + 5}%`, 
+                    top: `${point.coordinates.lat - 5}%`,
+                    opacity: 0.8,
+                  }}
+                  onClick={() => setSelectedPoint(point)}
+                >
+                  <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 bg-white p-2 rounded shadow-lg w-48 z-10 text-xs hidden group-hover:block">
+                    <p className="font-medium">{point.productCategory}</p>
+                    <p>Demanda: {point.demandVolume.toLocaleString()} un.</p>
+                    <p>Preço médio: {formatCurrency(point.averagePrice)}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Selected point info */}
+              {selectedPoint && (
+                <div className="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 w-72 z-20">
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-medium">{selectedPoint.productCategory}</h4>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-auto w-auto p-1"
+                      onClick={() => setSelectedPoint(null)}
+                    >
+                      ×
+                    </Button>
+                  </div>
                   
-                  <div className="absolute top-2 right-2 bg-white rounded-md shadow p-2 text-xs">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                      <span>Oferta</span>
+                  <p className="text-sm text-gray-600">{selectedPoint.region}</p>
+                  
+                  <div className="mt-3 grid grid-cols-2 gap-3">
+                    <div>
+                      <span className="text-xs text-gray-500">Oferta</span>
+                      <p className="font-medium">{selectedPoint.supplyVolume.toLocaleString()} un.</p>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                      <span>Demanda</span>
+                    <div>
+                      <span className="text-xs text-gray-500">Demanda</span>
+                      <p className="font-medium">{selectedPoint.demandVolume.toLocaleString()} un.</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-500">Preço médio</span>
+                      <p className="font-medium">{formatCurrency(selectedPoint.averagePrice)}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-gray-500">Tendência</span>
+                      <p className={`font-medium ${selectedPoint.trends.direction === 'up' ? 'text-green-600' : selectedPoint.trends.direction === 'down' ? 'text-red-600' : 'text-gray-600'}`}>
+                        {selectedPoint.trends.direction === 'up' ? '↑' : 
+                         selectedPoint.trends.direction === 'down' ? '↓' : '→'} {selectedPoint.trends.percentage}%
+                      </p>
                     </div>
                   </div>
                   
-                  {!mapInitialized && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-white/80">
-                      <div className="text-center">
-                        <p className="text-gray-600 mb-4">Clique para inicializar o mapa</p>
-                        <Button 
-                          className="bg-[#0078D4] hover:bg-[#005A9C]"
-                          onClick={() => setMapInitialized(true)}
-                        >
-                          Carregar Mapa
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {selectedPoint && (
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white rounded-lg shadow-lg p-4 w-80">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-medium text-sm">{selectedPoint.productCategory}</h3>
-                        <Badge className="bg-blue-100 text-blue-800">
-                          {selectedPoint.region}
-                        </Badge>
-                      </div>
-                      <div className="mt-2 space-y-1">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-500">Oferta:</span>
-                          <span>{selectedPoint.supplyVolume.toLocaleString()} {selectedPoint.unit}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-500">Demanda:</span>
-                          <span>{selectedPoint.demandVolume.toLocaleString()} {selectedPoint.unit}</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-gray-500">Preço médio:</span>
-                          <span>{formatCurrency(selectedPoint.averagePrice)}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="text-gray-500">Tendência:</span>
-                          <span className="flex items-center">
-                            {selectedPoint.trends.direction === 'up' ? (
-                              <Badge className="bg-green-100 text-green-800">
-                                Em alta +{selectedPoint.trends.percentage}%
-                              </Badge>
-                            ) : selectedPoint.trends.direction === 'down' ? (
-                              <Badge className="bg-red-100 text-red-800">
-                                Em queda -{selectedPoint.trends.percentage}%
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-gray-100 text-gray-800">
-                                Estável
-                              </Badge>
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex justify-end mt-3">
-                        <Button size="sm" variant="outline" onClick={() => setSelectedPoint(null)}>
-                          Fechar
-                        </Button>
-                      </div>
-                    </div>
-                  )}
+                  <div className="mt-3 pt-3 border-t">
+                    <Button size="sm" className="w-full bg-[#005A9C] hover:bg-[#004a80]">Ver análise completa</Button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Map legend */}
+            <div className="absolute left-4 bottom-4 bg-white p-3 rounded-lg shadow-md">
+              <h4 className="text-sm font-medium mb-2">Legenda</h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span>Pontos de Oferta</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                  <span>Pontos de Demanda</span>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </TabsContent>
       
       <TabsContent value="data" className="mt-0 p-0">
-        <div className="grid grid-cols-1 gap-6">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg text-[#005A9C]">Análise de Oferta e Demanda</CardTitle>
-              <CardDescription>
-                Comparativo detalhado por região e categoria de produto
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-gray-50 text-left">
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Região</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Produto</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Oferta</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Demanda</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Diferença</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Preço Médio</th>
-                      <th className="p-3 border-b text-sm font-medium text-gray-500">Tendência</th>
+        <Card>
+          <CardHeader className="py-4 px-5">
+            <CardTitle className="text-lg">Análise de Dados Geomarketing</CardTitle>
+            <CardDescription>
+              Dados detalhados para {productFilter !== 'Todos' ? productFilter : 'todas as categorias'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="px-5 pb-5 pt-0">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-2 px-3 text-sm font-medium">Região</th>
+                    <th className="text-left py-2 px-3 text-sm font-medium">Categoria</th>
+                    <th className="text-right py-2 px-3 text-sm font-medium">Oferta</th>
+                    <th className="text-right py-2 px-3 text-sm font-medium">Demanda</th>
+                    <th className="text-right py-2 px-3 text-sm font-medium">Preço médio</th>
+                    <th className="text-left py-2 px-3 text-sm font-medium">Tendência</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.map((item, index) => (
+                    <tr key={index} className="border-b hover:bg-gray-50">
+                      <td className="py-2 px-3 text-sm">{item.region}</td>
+                      <td className="py-2 px-3 text-sm">{item.productCategory}</td>
+                      <td className="py-2 px-3 text-sm text-right">{item.supplyVolume.toLocaleString()}</td>
+                      <td className="py-2 px-3 text-sm text-right">{item.demandVolume.toLocaleString()}</td>
+                      <td className="py-2 px-3 text-sm text-right">{formatCurrency(item.averagePrice)}</td>
+                      <td className="py-2 px-3 text-sm">
+                        <span className={`inline-flex items-center ${
+                          item.trends.direction === 'up' ? 'text-green-600' : 
+                          item.trends.direction === 'down' ? 'text-red-600' : 'text-gray-600'
+                        }`}>
+                          {item.trends.direction === 'up' ? '↑' : 
+                           item.trends.direction === 'down' ? '↓' : '→'} {item.trends.percentage}%
+                        </span>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {filteredData.map((data, index) => (
-                      <tr key={index} className="hover:bg-gray-50 border-b border-gray-100">
-                        <td className="p-3 text-sm">{data.region}</td>
-                        <td className="p-3 text-sm">{data.productCategory}</td>
-                        <td className="p-3 text-sm">{data.supplyVolume.toLocaleString()} {data.unit}</td>
-                        <td className="p-3 text-sm">{data.demandVolume.toLocaleString()} {data.unit}</td>
-                        <td className="p-3 text-sm">
-                          <span className={data.supplyVolume >= data.demandVolume ? "text-green-600" : "text-red-600"}>
-                            {(data.supplyVolume - data.demandVolume).toLocaleString()} {data.unit}
-                          </span>
-                        </td>
-                        <td className="p-3 text-sm">{formatCurrency(data.averagePrice)}</td>
-                        <td className="p-3 text-sm">
-                          {data.trends.direction === 'up' ? (
-                            <Badge className="bg-green-100 text-green-800">
-                              Em alta +{data.trends.percentage}%
-                            </Badge>
-                          ) : data.trends.direction === 'down' ? (
-                            <Badge className="bg-red-100 text-red-800">
-                              Em queda -{data.trends.percentage}%
-                            </Badge>
-                          ) : (
-                            <Badge className="bg-gray-100 text-gray-800">
-                              Estável
-                            </Badge>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
       </TabsContent>
     </div>
   );
