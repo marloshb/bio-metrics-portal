@@ -16,7 +16,20 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-05-15",
     expirationDate: "2025-05-15",
     sustainable_practices: ["Manejo sustentável", "Preservação de polinizadores", "Sistemas agroflorestais"],
-    co2_avoided: 150
+    co2_avoided: 150,
+    // Added fields for compatibility with BioMarketplace.tsx
+    sellerName: "Cooperativa Verde",
+    sellerDescription: "Cooperativa de produtores de mel da região amazônica",
+    sellerRating: 4.8,
+    rating: 4.5,
+    totalRatings: 27,
+    listedDate: "2024-05-20",
+    location: "Belém, PA",
+    availableQuantity: 350,
+    environmentalImpact: {
+      "CO2 Evitado": "150kg",
+      "Área Preservada": "2.5 ha"
+    }
   },
   {
     id: "p3",
@@ -32,7 +45,19 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-04-10",
     expirationDate: "2026-04-10",
     sustainable_practices: ["Extração tradicional", "Sem derrubada de árvores", "Manejo de baixo impacto"],
-    co2_avoided: 300
+    co2_avoided: 300,
+    sellerName: "Associação Extrativistas do Acre",
+    sellerDescription: "Associação de extrativistas tradicionais do Acre",
+    sellerRating: 4.6,
+    rating: 4.7,
+    totalRatings: 18,
+    listedDate: "2024-04-15",
+    location: "Rio Branco, AC",
+    availableQuantity: 120,
+    environmentalImpact: {
+      "CO2 Evitado": "300kg",
+      "Árvores Preservadas": "50"
+    }
   },
   {
     id: "p5",
@@ -48,7 +73,19 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-02-10",
     expirationDate: "2024-12-10",
     sustainable_practices: ["Extrativismo sustentável", "Coleta manual", "Apoio às comunidades locais"],
-    co2_avoided: 500
+    co2_avoided: 500,
+    sellerName: "Reserva Extrativista Chico Mendes",
+    sellerDescription: "Produtores da Reserva Extrativista Chico Mendes",
+    sellerRating: 4.9,
+    rating: 4.8,
+    totalRatings: 32,
+    listedDate: "2024-03-01",
+    location: "Xapuri, AC",
+    availableQuantity: 3500,
+    environmentalImpact: {
+      "CO2 Evitado": "500kg",
+      "Comunidades Beneficiadas": "5"
+    }
   },
   {
     id: "p7",
@@ -63,7 +100,19 @@ export const mockProductOfferings: ProductOffering[] = [
     certifications: ["FSC"],
     harvestDate: "2024-01-20",
     sustainable_practices: ["Manejo florestal sustentável", "Inventário florestal", "Corte seletivo", "Replantio"],
-    co2_avoided: 1200
+    co2_avoided: 1200,
+    sellerName: "Madeiras Sustentáveis Ltda.",
+    sellerDescription: "Empresa de manejo florestal sustentável certificada FSC",
+    sellerRating: 4.5,
+    rating: 4.4,
+    totalRatings: 15,
+    listedDate: "2024-02-10",
+    location: "Santarém, PA",
+    availableQuantity: 150,
+    environmentalImpact: {
+      "CO2 Evitado": "1200kg",
+      "Área sob manejo sustentável": "450 ha"
+    }
   },
   {
     id: "p8",
@@ -79,7 +128,19 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-05-01",
     expirationDate: "2025-05-01",
     sustainable_practices: ["Coleta sustentável", "Conservação do Cerrado", "Processamento local"],
-    co2_avoided: 850
+    co2_avoided: 850,
+    sellerName: "Cooperativa do Cerrado",
+    sellerDescription: "Cooperativa de coletores e produtores da região do Cerrado",
+    sellerRating: 4.7,
+    rating: 4.6,
+    totalRatings: 23,
+    listedDate: "2024-05-10",
+    location: "Alto Paraíso, GO",
+    availableQuantity: 1200,
+    environmentalImpact: {
+      "CO2 Evitado": "850kg",
+      "Área de Cerrado preservada": "120 ha"
+    }
   },
   {
     id: "p10",
@@ -94,7 +155,19 @@ export const mockProductOfferings: ProductOffering[] = [
     certifications: ["Selo Verde", "Compostável"],
     harvestDate: "2024-06-10",
     sustainable_practices: ["Zero plástico", "Matéria-prima renovável", "Compostável"],
-    co2_avoided: 2500
+    co2_avoided: 2500,
+    sellerName: "EcoPack Brasil",
+    sellerDescription: "Empresa especializada em embalagens sustentáveis",
+    sellerRating: 4.3,
+    rating: 4.2,
+    totalRatings: 42,
+    listedDate: "2024-06-12",
+    location: "Campinas, SP",
+    availableQuantity: 35000,
+    environmentalImpact: {
+      "CO2 Evitado": "2500kg",
+      "Plástico não utilizado": "5000kg"
+    }
   },
   {
     id: "p11",
@@ -110,7 +183,19 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-05-20",
     expirationDate: "2025-05-20",
     sustainable_practices: ["Agricultura orgânica", "Rotação de culturas", "Processamento tradicional"],
-    co2_avoided: 400
+    co2_avoided: 400,
+    sellerName: "Associação de Agricultores Familiares",
+    sellerDescription: "Associação de pequenos produtores de cana-de-açúcar",
+    sellerRating: 4.5,
+    rating: 4.4,
+    totalRatings: 31,
+    listedDate: "2024-05-25",
+    location: "Piracicaba, SP",
+    availableQuantity: 2500,
+    environmentalImpact: {
+      "CO2 Evitado": "400kg",
+      "Área sob cultivo orgânico": "15 ha"
+    }
   },
   {
     id: "p12",
@@ -126,6 +211,18 @@ export const mockProductOfferings: ProductOffering[] = [
     harvestDate: "2024-04-05",
     expirationDate: "2025-04-05",
     sustainable_practices: ["Extrativismo tradicional", "Empoderamento feminino", "Conhecimento tradicional"],
-    co2_avoided: 320
+    co2_avoided: 320,
+    sellerName: "Quebradeiras de Coco do Maranhão",
+    sellerDescription: "Grupo de mulheres quebradeiras de coco babaçu",
+    sellerRating: 4.8,
+    rating: 4.7,
+    totalRatings: 19,
+    listedDate: "2024-04-15",
+    location: "Codó, MA",
+    availableQuantity: 650,
+    environmentalImpact: {
+      "CO2 Evitado": "320kg",
+      "Mulheres beneficiadas": "35"
+    }
   }
 ];

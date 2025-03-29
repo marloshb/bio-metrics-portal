@@ -40,6 +40,16 @@ export interface ProductOffering {
   expirationDate?: string;
   sustainable_practices?: string[];
   co2_avoided?: number; // in kg
+  // Added fields to match what's used in BioMarketplace.tsx
+  sellerName?: string;
+  sellerDescription?: string;
+  sellerRating?: number;
+  totalRatings?: number;
+  rating?: number;
+  listedDate?: string;
+  location?: string;
+  availableQuantity?: number;
+  environmentalImpact?: Record<string, string>;
 }
 
 export interface GeoMarketingData {
@@ -74,6 +84,11 @@ export interface MarketplaceTransaction {
   updatedAt: string;
   completedAt?: string;
   traceabilityCode?: string;
+  // Added fields to match what's used in BioMarketplace.tsx
+  date?: string;
+  productName?: string;
+  unit?: string;
+  totalValue?: number;
 }
 
 export interface ChatMessage {

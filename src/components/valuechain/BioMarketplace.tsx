@@ -332,17 +332,17 @@ export const BioMarketplace = () => {
                 <tbody>
                   {mockMarketplaceTransactions.map((transaction, index) => (
                     <tr key={index} className="hover:bg-gray-50 border-b border-gray-100">
-                      <td className="p-3 text-sm">{new Date(transaction.date).toLocaleDateString('pt-BR')}</td>
+                      <td className="p-3 text-sm">{new Date(transaction.date || transaction.createdAt).toLocaleDateString('pt-BR')}</td>
                       <td className="p-3 text-sm font-medium">{transaction.productName}</td>
                       <td className="p-3 text-sm">{transaction.seller}</td>
                       <td className="p-3 text-sm">{transaction.buyer}</td>
                       <td className="p-3 text-sm">{transaction.quantity} {transaction.unit}</td>
-                      <td className="p-3 text-sm font-medium">{formatCurrency(transaction.totalValue)}</td>
+                      <td className="p-3 text-sm font-medium">{formatCurrency(transaction.totalValue || transaction.initialPrice * transaction.quantity)}</td>
                       <td className="p-3 text-sm">
                         <Badge className={
-                          transaction.status === 'Completa' ? 'bg-green-100 text-green-800' :
-                            transaction.status === 'Pendente' ? 'bg-amber-100 text-amber-800' :
-                              transaction.status === 'Em Andamento' ? 'bg-blue-100 text-blue-800' :
+                          transaction.status === 'Vendido' ? 'bg-green-100 text-green-800' :
+                            transaction.status === 'Disponível' ? 'bg-amber-100 text-amber-800' :
+                              transaction.status === 'Em negociação' ? 'bg-blue-100 text-blue-800' :
                                 'bg-red-100 text-red-800'
                         }>
                           {transaction.status}

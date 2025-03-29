@@ -11,7 +11,12 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     quantity: 50,
     status: "Disponível",
     createdAt: "2024-06-10T10:30:00Z",
-    updatedAt: "2024-06-10T10:30:00Z"
+    updatedAt: "2024-06-10T10:30:00Z",
+    // Added fields for compatibility with BioMarketplace.tsx
+    date: "2024-06-10T10:30:00Z",
+    productName: "Mel Orgânico",
+    unit: "kg",
+    totalValue: 35 * 50
   },
   {
     id: "tx2",
@@ -25,7 +30,11 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     createdAt: "2024-06-05T14:20:00Z",
     updatedAt: "2024-06-07T09:45:00Z",
     completedAt: "2024-06-07T09:45:00Z",
-    traceabilityCode: "TX2207090945"
+    traceabilityCode: "TX2207090945",
+    date: "2024-06-07T09:45:00Z",
+    productName: "Óleo Essencial de Copaíba",
+    unit: "L",
+    totalValue: 115 * 20
   },
   {
     id: "tx3",
@@ -36,7 +45,11 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     quantity: 500,
     status: "Em negociação",
     createdAt: "2024-06-08T11:15:00Z",
-    updatedAt: "2024-06-09T16:30:00Z"
+    updatedAt: "2024-06-09T16:30:00Z",
+    date: "2024-06-09T16:30:00Z",
+    productName: "Castanha-do-Brasil",
+    unit: "kg",
+    totalValue: 18 * 500
   },
   {
     id: "tx4",
@@ -47,7 +60,11 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     quantity: 10,
     status: "Disponível",
     createdAt: "2024-06-01T09:20:00Z",
-    updatedAt: "2024-06-01T09:20:00Z"
+    updatedAt: "2024-06-01T09:20:00Z",
+    date: "2024-06-01T09:20:00Z",
+    productName: "Madeira Certificada",
+    unit: "m³",
+    totalValue: 1800 * 10
   },
   {
     id: "tx5",
@@ -61,6 +78,10 @@ export const mockMarketplaceTransactions: MarketplaceTransaction[] = [
     createdAt: "2024-05-28T13:40:00Z",
     updatedAt: "2024-06-02T10:15:00Z",
     completedAt: "2024-06-02T10:15:00Z",
-    traceabilityCode: "TX0206021015"
+    traceabilityCode: "TX0206021015",
+    date: "2024-06-02T10:15:00Z",
+    productName: "Baru",
+    unit: "kg",
+    totalValue: 60 * 100
   }
 ];
