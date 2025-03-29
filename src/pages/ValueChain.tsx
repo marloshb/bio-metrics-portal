@@ -2,12 +2,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ActorRegistry } from '@/components/valuechain/ActorRegistry';
 import { GeoMarketingMap } from '@/components/valuechain/GeoMarketingMap';
 import { BioMarketplace } from '@/components/valuechain/BioMarketplace';
