@@ -18,7 +18,7 @@ const SustainabilityChart = () => {
     <div className="bio-card p-6 h-full flex flex-col">
       <SectionTitle 
         title="Produção Sustentável" 
-        subtitle="Resource utilization and sustainability metrics"
+        subtitle="Utilização de Recursos e Métricas Sustentáveis"
       />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
