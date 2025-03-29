@@ -24,7 +24,7 @@ const Index = () => {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 transition-all overflow-x-hidden">
+      <div className="flex-1 transition-all overflow-y-auto">
         {/* Top navigation */}
         <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center py-4 px-4 md:px-6 gap-3">
@@ -54,14 +54,14 @@ const Index = () => {
         </header>
         
         {/* Hero Section - Decreto Information */}
-        <div className="bg-gradient-to-r from-bio-green/20 to-bio-blue/20 p-4 md:p-6">
+        <div className="bg-gradient-to-r from-bio-green/20 to-bio-blue/20 p-4 md:p-6 ">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <div className="bg-white p-3 md:p-4 rounded-full">
                 <Leaf className="w-8 h-8 md:w-10 md:h-10 text-bio-green" />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg md:text-xl font-medium">Decreto nº 12.044, de 5 de junho de 2024</h2>
+                <h2 className="text-lg md:text-xl font-medium">BioEco</h2>
                 <p className="text-sm md:text-base mt-1">Institui a Estratégia Nacional de Bioeconomia, promovendo um modelo de desenvolvimento baseado em sustentabilidade, biodiversidade, inclusão e inovação.</p>
               </div>
               <button className="bio-button-secondary flex items-center text-xs md:text-sm py-1.5 px-3 mt-2 md:mt-0">
@@ -75,7 +75,7 @@ const Index = () => {
         {/* Main content */}
         <main className="px-3 md:px-6 py-3 md:py-6">
           {/* Date and filters */}
-          <div className="flex flex-col sm:flex-row sm:justify-between mb-4 md:mb-6 gap-3">
+          <div className="flex flex-col sm:flex-row sm:justify-between mb-4 md:mb-6 gap-3 overflow-y-auto">
             <div>
               <p className="text-xs sm:text-sm text-gray-500">Data de hoje</p>
               <p className="text-sm md:text-base font-medium">{new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -96,7 +96,7 @@ const Index = () => {
           </div>
           
           {/* Dashboard cards - summary */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6 mb-6 overflow-y-auto">
             <div className="bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow">
               <div className="flex justify-between items-start">
                 <div>
@@ -164,7 +164,7 @@ const Index = () => {
           
           {/* Dashboard grid */}
           <div className={cn(
-            "grid grid-cols-1 gap-3 md:gap-4 lg:gap-6 transition-opacity duration-500",
+            "grid grid-cols-1 gap-3 md:gap-4 lg:gap-6 overflow-y-auto transition-opacity duration-500",
             isLoading ? "opacity-0" : "opacity-100"
           )}>
             <div className="section-appear" style={{ "--appear-delay": 1 } as React.CSSProperties}>
@@ -183,7 +183,7 @@ const Index = () => {
           
           {/* Loading state */}
           {isLoading && (
-            <div className="flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px]">
+            <div className="flex justify-center items-center h-[300px] md:h-[400px] lg:h-[600px] overflow-y-auto">
               <div className="relative w-12 h-12 md:w-16 md:h-16">
                 <div className="absolute top-0 left-0 w-full h-full border-4 border-bio-gray rounded-full"></div>
                 <div className="absolute top-0 left-0 w-full h-full border-4 border-bio-green rounded-full animate-spin border-t-transparent"></div>
