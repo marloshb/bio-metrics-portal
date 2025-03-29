@@ -164,7 +164,7 @@ const Index = () => {
           {/* Dashboard grid */}
           <div className={cn(
             "grid grid-cols-1 gap-3 md:gap-4 lg:gap-6 overflow-y-auto transition-opacity duration-500",
-            isLoading ? "opacity-0" : "opacity-100 opacity-100 overflow-y-auto"
+            isLoading ? "opacity-0" : "opacity-100 overflow-y-auto"
           )}>
             <div className="section-appear" style={{ "--appear-delay": 1 } as React.CSSProperties}>
               <BiodiversityMap />

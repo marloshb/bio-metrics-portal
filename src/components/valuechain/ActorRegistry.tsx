@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Search, Filter, MapPin, Building, Mail, Phone, Plus, Calendar, Award, Tag, Globe } from 'lucide-react';
 import { mockActors } from '@/data/valuechain';
@@ -78,7 +79,7 @@ export const ActorRegistry = () => {
                 <SelectValue placeholder="Filtrar por tipo" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos os tipos</SelectItem>
+                <SelectItem value="all">Todos os tipos</SelectItem>
                 {uniqueTypes.map(type => (
                   <SelectItem key={type} value={type}>{type}</SelectItem>
                 ))}
@@ -91,7 +92,7 @@ export const ActorRegistry = () => {
                 <SelectValue placeholder="Filtrar por região" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todas as regiões</SelectItem>
+                <SelectItem value="all">Todas as regiões</SelectItem>
                 {uniqueRegions.map(region => (
                   <SelectItem key={region} value={region}>{region}</SelectItem>
                 ))}

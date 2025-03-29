@@ -109,7 +109,7 @@ const BiodiversityActivities: React.FC = () => {
                     </div>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todas as regiões</SelectItem>
+                    <SelectItem value="all">Todas as regiões</SelectItem>
                     {regions.map(region => (
                       <SelectItem key={region} value={region}>{region}</SelectItem>
                     ))}
@@ -123,7 +123,7 @@ const BiodiversityActivities: React.FC = () => {
                     </div>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos os setores</SelectItem>
+                    <SelectItem value="all">Todos os setores</SelectItem>
                     {sectors.map(sector => (
                       <SelectItem key={sector} value={sector}>{sector}</SelectItem>
                     ))}
