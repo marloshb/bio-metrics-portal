@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { FileDown, FilePdf, FileSpreadsheet, FileText, Check, Mail, Link as LinkIcon } from 'lucide-react';
+import { FileDown, File, FileSpreadsheet, FileText, Check, Mail, Link as LinkIcon } from 'lucide-react';
 
 const ExportOptions = () => {
   const [exportFormat, setExportFormat] = useState('pdf');
@@ -223,7 +222,7 @@ const ExportOptions = () => {
             </CardContent>
             <CardFooter className="flex flex-col md:flex-row gap-4 justify-between">
               <div className="flex items-center gap-4 text-sm text-gray-500">
-                {exportFormat === 'pdf' && <FilePdf className="h-8 w-8 text-red-500" />}
+                {exportFormat === 'pdf' && <File className="h-8 w-8 text-red-500" />}
                 {exportFormat === 'excel' && <FileSpreadsheet className="h-8 w-8 text-green-600" />}
                 {exportFormat === 'csv' && <FileText className="h-8 w-8 text-blue-500" />}
                 {exportFormat === 'powerpoint' && <FileText className="h-8 w-8 text-orange-500" />}
@@ -245,7 +244,7 @@ const ExportOptions = () => {
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <FilePdf className="h-6 w-6 text-red-500" />
+                  <File className="h-6 w-6 text-red-500" />
                   <div>
                     <p className="font-medium">Relatório_2023_Nacional.pdf</p>
                     <p className="text-xs text-gray-500">Exportado em 15/01/2024</p>
@@ -267,7 +266,7 @@ const ExportOptions = () => {
               
               <div className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 cursor-pointer">
                 <div className="flex items-center gap-3">
-                  <FilePdf className="h-6 w-6 text-red-500" />
+                  <File className="h-6 w-6 text-red-500" />
                   <div>
                     <p className="font-medium">Resumo_Executivo_Q4.pdf</p>
                     <p className="text-xs text-gray-500">Exportado em 02/01/2024</p>

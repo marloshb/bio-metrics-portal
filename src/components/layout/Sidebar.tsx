@@ -12,6 +12,7 @@ import {
   FileBarChart,
   FileText,
   Info,
+  Leaf,
   Link,
   Map,
   Network,
@@ -19,7 +20,6 @@ import {
   PackageOpen,
   PanelTop,
   RectangleHorizontal,
-  Seedling,
   Settings,
   Store,
   Users,
@@ -59,7 +59,7 @@ export function Sidebar() {
           to="/"
           className="flex items-center gap-2 font-semibold text-lg text-emerald-700"
         >
-          <Seedling className="h-6 w-6" />
+          <Leaf className="h-6 w-6" />
           <span className="font-semibold">BioECO</span>
         </NavLink>
       </div>

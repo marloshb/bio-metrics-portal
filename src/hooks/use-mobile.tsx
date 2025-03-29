@@ -1,3 +1,4 @@
+
 import * as React from "react"
 
 const MOBILE_BREAKPOINT = 768
@@ -16,4 +17,20 @@ export function useIsMobile() {
   }, [])
 
   return !!isMobile
+}
+
+// Add the useMobile hook that includes sidebar open state management
+export function useMobile() {
+  const isMobile = useIsMobile()
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(!isMobile)
+
+  React.useEffect(() => {
+    if (isMobile) {
+      setIsSidebarOpen(false)
+    } else {
+      setIsSidebarOpen(true)
+    }
+  }, [isMobile])
+
+  return { isMobile, isSidebarOpen, setIsSidebarOpen }
 }
