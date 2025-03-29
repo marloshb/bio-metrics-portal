@@ -1,5 +1,16 @@
-import React from 'react';
+
+import React, { useState } from 'react';
+import { Search, Filter, MapPin, Download, BarChart2, Info, Layers } from 'lucide-react';
 import { mockGeoMarketingData } from '@/data/valuechain';
+import { GeoMarketingData } from '@/types/valueChainTypes';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { formatCurrency } from '@/lib/utils';
 
 export const GeoMarketingMap = () => {
   const [productFilter, setProductFilter] = useState<string>('Todos');
@@ -37,7 +48,7 @@ export const GeoMarketingMap = () => {
           <Tabs value={view} onValueChange={(v) => setView(v as 'map' | 'data')} className="w-auto">
             <TabsList>
               <TabsTrigger value="map" className="flex items-center">
-                <MapIcon className="h-4 w-4 mr-2" />
+                <MapPin className="h-4 w-4 mr-2" />
                 <span>Mapa</span>
               </TabsTrigger>
               <TabsTrigger value="data" className="flex items-center">
@@ -404,32 +415,31 @@ export const GeoMarketingMap = () => {
                   </thead>
                   <tbody>
                     {filteredData.map((data, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="p-3 border-b text-sm">{data.region}</td>
-                        <td className="p-3 border-b text-sm">{data.productCategory}</td>
-                        <td className="p-3 border-b text-sm">{data.supplyVolume.toLocaleString()} {data.unit}</td>
-                        <td className="p-3 border-b text-sm">{data.demandVolume.toLocaleString()} {data.unit}</td>
-                        <td className="p-3 border-b text-sm">
-                          <span className={
-                            data.supplyVolume >= data.demandVolume ? 'text-green-600' : 'text-red-600'
-                          }>
+                      <tr key={index} className="hover:bg-gray-50 border-b border-gray-100">
+                        <td className="p-3 text-sm">{data.region}</td>
+                        <td className="p-3 text-sm">{data.productCategory}</td>
+                        <td className="p-3 text-sm">{data.supplyVolume.toLocaleString()} {data.unit}</td>
+                        <td className="p-3 text-sm">{data.demandVolume.toLocaleString()} {data.unit}</td>
+                        <td className="p-3 text-sm">
+                          <span className={data.supplyVolume >= data.demandVolume ? "text-green-600" : "text-red-600"}>
                             {(data.supplyVolume - data.demandVolume).toLocaleString()} {data.unit}
                           </span>
                         </td>
-                        <td className="p-3 border-b text-sm">{formatCurrency(data.averagePrice)}/{data.unit}</td>
-                        <td className="p-3 border-b text-sm">
-                          <div className="flex items-center">
-                            {data.trends.direction === 'up' ? (
-                              <Zap className="h-4 w-4 text-green-500 mr-1" />
-                            ) : data.trends.direction === 'down' ? (
-                              <Zap className="h-4 w-4 text-red-500 mr-1 transform rotate-180" />
-                            ) : (
-                              <span className="h-4 w-4 inline-block mr-1">—</span>
-                            )}
-                            <span>
-                              {data.trends.percentage}%
-                            </span>
-                          </div>
+                        <td className="p-3 text-sm">{formatCurrency(data.averagePrice)}</td>
+                        <td className="p-3 text-sm">
+                          {data.trends.direction === 'up' ? (
+                            <Badge className="bg-green-100 text-green-800">
+                              Em alta +{data.trends.percentage}%
+                            </Badge>
+                          ) : data.trends.direction === 'down' ? (
+                            <Badge className="bg-red-100 text-red-800">
+                              Em queda -{data.trends.percentage}%
+                            </Badge>
+                          ) : (
+                            <Badge className="bg-gray-100 text-gray-800">
+                              Estável
+                            </Badge>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -437,61 +447,6 @@ export const GeoMarketingMap = () => {
                 </table>
               </div>
             </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg text-[#005A9C]">Oportunidades de Mercado</CardTitle>
-              <CardDescription>
-                Regiões com maior diferença entre oferta e demanda
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredData
-                  .sort((a, b) => (b.demandVolume - b.supplyVolume) - (a.demandVolume - a.supplyVolume))
-                  .slice(0, 3)
-                  .map((data, index) => (
-                    <Card key={index} className="overflow-hidden">
-                      <div className={`h-2 ${data.trends.direction === 'up' ? 'bg-green-500' : data.trends.direction === 'down' ? 'bg-red-500' : 'bg-gray-300'}`}></div>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="font-medium">{data.productCategory}</h3>
-                          <Badge>{data.region}</Badge>
-                        </div>
-                        <div className="space-y-1 mb-3">
-                          <div className="flex justify-between text-sm">
-                            <span className="text-gray-500">Demanda:</span>
-                            <span>{data.demandVolume.toLocaleString()} {data.unit}</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-gray-500">Oferta:</span>
-                            <span>{data.supplyVolume.toLocaleString()} {data.unit}</span>
-                          </div>
-                          <div className="flex justify-between text-sm">
-                            <span className="text-gray-500">Déficit:</span>
-                            <span className="font-medium text-red-600">
-                              {(data.demandVolume - data.supplyVolume).toLocaleString()} {data.unit}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex justify-between text-sm border-t pt-2">
-                          <span className="text-gray-500">Oportunidade estimada:</span>
-                          <span className="font-medium text-green-600">
-                            {formatCurrency((data.demandVolume - data.supplyVolume) * data.averagePrice)}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                }
-              </div>
-            </CardContent>
-            <CardFooter className="border-t bg-gray-50">
-              <Button variant="outline" size="sm" className="ml-auto">
-                Ver relatório completo
-              </Button>
-            </CardFooter>
           </Card>
         </div>
       </TabsContent>
