@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import BiodiversityMap from '@/components/dashboard/BiodiversityMap';
 import SustainabilityChart from '@/components/dashboard/SustainabilityChart';
-// import CommunityTracker from '@/components/dashboard/CommunityTracker';
 import InnovationHub from '@/components/dashboard/InnovationHub';
 import { Bell, Search, BarChart3, Info, Calendar, Leaf, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -165,7 +164,7 @@ const Index = () => {
           {/* Dashboard grid */}
           <div className={cn(
             "grid grid-cols-1 gap-3 md:gap-4 lg:gap-6 overflow-y-auto transition-opacity duration-500",
-            isLoading ? "opacity-0" : "opacity-100 overflow-y-auto"
+            isLoading ? "opacity-0" : "opacity-100 opacity-100 overflow-y-auto"
           )}>
             <div className="section-appear" style={{ "--appear-delay": 1 } as React.CSSProperties}>
               <BiodiversityMap />
@@ -173,9 +172,6 @@ const Index = () => {
             <div className="section-appear" style={{ "--appear-delay": 2 } as React.CSSProperties}>
               <SustainabilityChart />
             </div>
-            //<div className="section-appear" style={{ "--appear-delay": 3 } as React.CSSProperties}>
-            //  <CommunityTracker />
-            //</div>
             <div className="section-appear" style={{ "--appear-delay": 4 } as React.CSSProperties}>
               <InnovationHub />
             </div>
