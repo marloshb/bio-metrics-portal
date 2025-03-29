@@ -107,7 +107,7 @@ const TransactionVideoCard = ({ transaction }: TransactionVideoCardProps) => {
               Total: {formatCurrency(transaction.totalValue || 0)}
             </Badge>
             
-            {transaction.buyerId && (
+            {transaction.buyer && (
               <Badge className="bg-blue-100 text-blue-700 border border-blue-200">
                 Comprador: ID {transaction.buyer.substring(0, 3)}...
               </Badge>
@@ -120,3 +120,4 @@ const TransactionVideoCard = ({ transaction }: TransactionVideoCardProps) => {
 };
 
 export default TransactionVideoCard;
+
