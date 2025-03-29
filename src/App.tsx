@@ -11,6 +11,7 @@ import Observatory from "./pages/Observatory";
 import BioeconomicVocationPage from "./pages/BioeconomicVocation";
 import BioeconomicHubPage from "./pages/BioeconomicHub";
 import ValueChainPage from "./pages/ValueChain";
+import BioeconomicStrategiesPage from "./pages/BioeconomicStrategies";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/vocation" element={<BioeconomicVocationPage />} />
             <Route path="/hub" element={<BioeconomicHubPage />} />
             <Route path="/valuechain" element={<ValueChainPage />} />
+            <Route path="/strategies" element={<BioeconomicStrategiesPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
