@@ -54,7 +54,7 @@ const Index = () => {
         </header>
         
         {/* Hero Section - Decreto Information */}
-        <div className="bg-gradient-to-r from-bio-green/20 to-bio-blue/20 p-4 md:p-6 ">
+        <div className="bg-gradient-to-r from-bio-green/20 to-bio-blue/20 p-4 md:p-6 overflow-y-auto">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <div className="bg-white p-3 md:p-4 rounded-full">
@@ -62,7 +62,7 @@ const Index = () => {
               </div>
               <div className="flex-1">
                 <h2 className="text-lg md:text-xl font-medium">BioEco</h2>
-                <p className="text-sm md:text-base mt-1">Institui a Estratégia Nacional de Bioeconomia, promovendo um modelo de desenvolvimento baseado em sustentabilidade, biodiversidade, inclusão e inovação.</p>
+                <p className="text-sm md:text-base mt-1">Estratégia Nacional de Bioeconomia, promovendo um modelo de desenvolvimento baseado em sustentabilidade, biodiversidade, inclusão e inovação.</p>
               </div>
               <button className="bio-button-secondary flex items-center text-xs md:text-sm py-1.5 px-3 mt-2 md:mt-0">
                 <Info className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
@@ -73,7 +73,7 @@ const Index = () => {
         </div>
         
         {/* Main content */}
-        <main className="px-3 md:px-6 py-3 md:py-6">
+        <main className="px-3 md:px-6 py-3 md:py-6 overflow-y-auto">
           {/* Date and filters */}
           <div className="flex flex-col sm:flex-row sm:justify-between mb-4 md:mb-6 gap-3 overflow-y-auto">
             <div>
@@ -165,7 +165,7 @@ const Index = () => {
           {/* Dashboard grid */}
           <div className={cn(
             "grid grid-cols-1 gap-3 md:gap-4 lg:gap-6 overflow-y-auto transition-opacity duration-500",
-            isLoading ? "opacity-0" : "opacity-100"
+            isLoading ? "opacity-0" : "opacity-100 overflow-y-auto"
           )}>
             <div className="section-appear" style={{ "--appear-delay": 1 } as React.CSSProperties}>
               <BiodiversityMap />
