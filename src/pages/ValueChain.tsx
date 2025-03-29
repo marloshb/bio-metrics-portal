@@ -6,9 +6,19 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { ActorRegistry } from '@/components/valuechain/ActorRegistry';
 import { GeoMarketingMap } from '@/components/valuechain/GeoMarketingMap';
 import { BioMarketplace } from '@/components/valuechain/BioMarketplace';
+import { useToast } from '@/components/ui/use-toast';
 
 const ValueChainPage = () => {
-  const [activeTab, setActiveTab] = useState("actors");
+  const [activeTab, setActiveTab] = useState("marketplace"); // Alterando para iniciar no marketplace
+  const { toast } = useToast();
+
+  // Mostrar toast de boas-vindas quando carrega a página
+  React.useEffect(() => {
+    toast({
+      title: "Cadeia de Valor",
+      description: "Plataforma integrada para conexão de atores e comercialização de produtos da bioeconomia"
+    });
+  }, [toast]);
 
   return (
     <div className="flex min-h-screen w-full bg-gray-50">

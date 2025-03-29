@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Search,
   Filter,
@@ -31,6 +31,7 @@ import { formatCurrency } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ProductVideoCard from './ProductVideoCard';
 import TransactionVideoCard from './TransactionVideoCard';
+import { useToast } from '@/components/ui/use-toast';
 
 export const BioMarketplace = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -42,6 +43,19 @@ export const BioMarketplace = () => {
   const [activeTab, setActiveTab] = useState<'offerings' | 'transactions'>('offerings');
   const [selectedProduct, setSelectedProduct] = useState<ProductOffering | null>(null);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Verificar se os dados estão disponíveis
+    console.log('Offerings disponíveis:', mockProductOfferings.length);
+    console.log('Transações disponíveis:', mockMarketplaceTransactions.length);
+    
+    // Mostrar toast de boas-vindas ao marketplace
+    toast({
+      title: "Marketplace Bioeconômico",
+      description: "Bem-vindo à plataforma de comercialização de produtos da bioeconomia",
+    });
+  }, [toast]);
 
   // Get unique categories for filters
   const uniqueCategories = Array.from(
@@ -89,6 +103,25 @@ export const BioMarketplace = () => {
       return new Date(b.listedDate || '').getTime() - new Date(a.listedDate || '').getTime();
     }
   });
+
+  const handleProductSelect = (product: ProductOffering) => {
+    setSelectedProduct(product);
+    console.log("Produto selecionado:", product);
+  };
+
+  const handleContactSeller = () => {
+    toast({
+      title: "Mensagem enviada",
+      description: "O vendedor receberá seu contato em breve.",
+    });
+  };
+
+  const handlePurchase = () => {
+    toast({
+      title: "Processo de compra iniciado",
+      description: "Você será redirecionado para finalizar a transação.",
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -168,9 +201,9 @@ export const BioMarketplace = () => {
 
         {/* Product VideoCard grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sortedOfferings.length > 0 ? (
+          {sortedOfferings && sortedOfferings.length > 0 ? (
             sortedOfferings.map((product) => (
-              <ProductVideoCard key={product.id} product={product} onSelect={setSelectedProduct} />
+              <ProductVideoCard key={product.id} product={product} onSelect={handleProductSelect} />
             ))
           ) : (
             <div className="col-span-3 text-center py-10 bg-gray-50 rounded-lg">
@@ -194,7 +227,15 @@ export const BioMarketplace = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <div className="aspect-square bg-gray-100 rounded-lg flex items-center justify-center mb-4 relative overflow-hidden group">
-                    <ShoppingBag className="h-16 w-16 text-gray-400 group-hover:opacity-0 transition-opacity" />
+                    {selectedProduct.images && selectedProduct.images.length > 0 ? (
+                      <img 
+                        src={selectedProduct.images[0]}
+                        alt={selectedProduct.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <ShoppingBag className="h-16 w-16 text-gray-400 group-hover:opacity-0 transition-opacity" />
+                    )}
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <PlayCircle className="h-16 w-16 text-white" />
                     </div>
@@ -284,8 +325,10 @@ export const BioMarketplace = () => {
                       </div>
                       <p className="text-sm text-gray-600 mt-1 mb-2">{selectedProduct.sellerDescription}</p>
                       <div className="flex gap-2">
-                        <Button size="sm" className="bg-[#0078D4] hover:bg-[#005A9C] flex-1">Comprar</Button>
-                        <Button size="sm" variant="outline" className="flex items-center">
+                        <Button size="sm" className="bg-[#0078D4] hover:bg-[#005A9C] flex-1" onClick={handlePurchase}>
+                          Comprar
+                        </Button>
+                        <Button size="sm" variant="outline" className="flex items-center" onClick={handleContactSeller}>
                           <MessageCircle className="h-4 w-4 mr-1" /> Contatar
                         </Button>
                       </div>
@@ -321,9 +364,16 @@ export const BioMarketplace = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {mockMarketplaceTransactions.map((transaction, index) => (
-            <TransactionVideoCard key={index} transaction={transaction} />
-          ))}
+          {mockMarketplaceTransactions && mockMarketplaceTransactions.length > 0 ? (
+            mockMarketplaceTransactions.map((transaction, index) => (
+              <TransactionVideoCard key={transaction.id || index} transaction={transaction} />
+            ))
+          ) : (
+            <div className="col-span-3 text-center py-10 bg-gray-50 rounded-lg">
+              <DollarSign className="h-10 w-10 text-gray-400 mx-auto mb-3" />
+              <p className="text-gray-500">Nenhuma transação encontrada.</p>
+            </div>
+          )}
         </div>
       </TabsContent>
     </div>
