@@ -19,8 +19,8 @@ export function useIsMobile() {
   return !!isMobile
 }
 
-// Add the useMobile hook that includes sidebar open state management
-export function useMobile() {
+// Creating a useSidebar hook for sidebar state management
+export function useSidebar() {
   const isMobile = useIsMobile()
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(!isMobile)
 

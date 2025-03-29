@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -31,17 +30,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function Sidebar() {
-  const { isMobile, isSidebarOpen, setIsSidebarOpen } = useMobile();
+  const isMobile = useIsMobile();
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(!isMobile);
   const location = useLocation();
 
   React.useEffect(() => {
     if (isMobile) {
       setIsSidebarOpen(false);
     }
-  }, [location.pathname, isMobile, setIsSidebarOpen]);
+  }, [location.pathname, isMobile]);
 
   if (isMobile && !isSidebarOpen) return null;
 
@@ -59,7 +59,11 @@ export function Sidebar() {
           to="/"
           className="flex items-center gap-2 font-semibold text-lg text-emerald-700"
         >
-          <Leaf className="h-6 w-6" />
+          <img 
+            src="/lovable-uploads/e1f418e7-064f-4e6f-9a07-ddbc515ad576.png" 
+            alt="BioECO Logo" 
+            className="h-9 w-auto" 
+          />
           <span className="font-semibold">BioECO</span>
         </NavLink>
       </div>

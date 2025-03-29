@@ -60,7 +60,11 @@ const Index = () => {
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
               <div className="bg-white p-3 md:p-4 rounded-full">
-                <Leaf className="w-8 h-8 md:w-10 md:h-10 text-bio-green" />
+                <img 
+                  src="/lovable-uploads/e1f418e7-064f-4e6f-9a07-ddbc515ad576.png" 
+                  alt="BioECO Logo" 
+                  className="w-8 h-8 md:w-10 md:h-10" 
+                />
               </div>
               <div className="flex-1">
                 <h2 className="text-lg md:text-xl font-medium">BioEco</h2>
