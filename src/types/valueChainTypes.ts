@@ -75,3 +75,15 @@ export interface MarketplaceTransaction {
   completedAt?: string;
   traceabilityCode?: string;
 }
+
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  receiverId: string;
+  receiverName: string;
+  messageText: string;
+  timestamp: string;
+  read: boolean;
+  transactionId: string; // reference to MarketplaceTransaction.id
+}
