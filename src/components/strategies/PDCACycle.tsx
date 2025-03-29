@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { CalendarIcon, ChevronRightIcon, ClipboardEdit, FilePlus, Filter, Search } from "lucide-react";
 import { mockBioeconomicActions } from '@/data/mockStrategiesData';
 import { BioeconomicAction } from '@/types/strategiesTypes';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const PDCAStages = ["Planejar", "Fazer", "Checar", "Agir"] as const;
 
