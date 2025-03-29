@@ -10,6 +10,7 @@ import React from "react";
 import Observatory from "./pages/Observatory";
 import BioeconomicVocationPage from "./pages/BioeconomicVocation";
 import BioeconomicHubPage from "./pages/BioeconomicHub";
+import ValueChainPage from "./pages/ValueChain";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/observatory" element={<Observatory />} />
             <Route path="/vocation" element={<BioeconomicVocationPage />} />
             <Route path="/hub" element={<BioeconomicHubPage />} />
+            <Route path="/valuechain" element={<ValueChainPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
