@@ -18,7 +18,7 @@ export function Sidebar({ className }: SidebarProps) {
     { icon: BoxSelect, label: 'HUB Bioeconômico', path: '/hub' },
     { icon: TreeDeciduous, label: 'BioVocação', path: '/vocation' },
     { icon: Compass, label: 'Estratégias', path: '/strategies' },
-    { icon: Share2, label: 'Cadeia de Valor', path: '/value-chain' },
+    { icon: Share2, label: 'Cadeia de Valor', path: '/valuechain' },
     { icon: LineChart, label: 'Relatórios', path: '/reports' },
   ];
 
