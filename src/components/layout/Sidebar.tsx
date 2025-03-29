@@ -77,7 +77,7 @@ export function Sidebar({ className }: SidebarProps) {
             <span className="text-sm font-medium">JD</span>
           </div>
           <div className={cn('ml-3 transition-opacity duration-300', collapsed ? 'opacity-0 w-0' : 'opacity-100')}>
-            <p className="text-sm font-medium">John Doe</p>
+            <p className="text-sm font-medium">Marlos</p>
             <p className="text-xs text-white/70">Admin</p>
           </div>
         </div>
