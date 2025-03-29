@@ -17,20 +17,20 @@ const SustainabilityChart = () => {
   return (
     <div className="bio-card p-6 h-full flex flex-col">
       <SectionTitle 
-        title="Sustainable Production" 
+        title="Produção Sustentável" 
         subtitle="Resource utilization and sustainability metrics"
       />
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <StatCard 
-          title="Waste Reduction" 
+          title="Redução de Resíduos" 
           value="87%" 
           icon={CircleOff}
           trend={{ value: 12, positive: true }}
           iconColor="text-bio-green"
         />
         <StatCard 
-          title="Recycling Rate" 
+          title="Índice de Reciclagem" 
           value="73%" 
           icon={Recycle}
           trend={{ value: 8, positive: true }}
