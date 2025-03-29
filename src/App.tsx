@@ -12,6 +12,7 @@ import BioeconomicVocationPage from "./pages/BioeconomicVocation";
 import BioeconomicHubPage from "./pages/BioeconomicHub";
 import ValueChainPage from "./pages/ValueChain";
 import BioeconomicStrategiesPage from "./pages/BioeconomicStrategies";
+import Reports from "./pages/Reports";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App: React.FC = () => {
               <Route path="/hub" element={<BioeconomicHubPage />} />
               <Route path="/valuechain" element={<ValueChainPage />} />
               <Route path="/strategies" element={<BioeconomicStrategiesPage />} />
+              <Route path="/reports" element={<Reports />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

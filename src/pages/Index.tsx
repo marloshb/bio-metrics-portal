@@ -1,11 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
 import BiodiversityMap from '@/components/dashboard/BiodiversityMap';
 import SustainabilityChart from '@/components/dashboard/SustainabilityChart';
 import InnovationHub from '@/components/dashboard/InnovationHub';
 import CommunityTracker from '@/components/dashboard/CommunityTracker';
-import { Bell, Search, BarChart3, Info, Calendar, Leaf, Download } from 'lucide-react';
+import { Bell, Search, BarChart3, Info, Calendar, Leaf, Download, FileBarChart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -84,10 +85,10 @@ const Index = () => {
               </div>
               
               <div className="flex space-x-2 sm:space-x-3">
-                <button className="bio-button flex items-center text-xs md:text-sm py-1 px-3 md:px-4">
-                  <Download className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-                  <span>Exportar Relatório</span>
-                </button>
+                <Link to="/reports" className="bio-button flex items-center text-xs md:text-sm py-1 px-3 md:px-4">
+                  <FileBarChart className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
+                  <span>Ver Relatórios</span>
+                </Link>
                 <select className="text-xs md:text-sm px-2 md:px-4 py-1 md:py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-bio-green/30 bg-white">
                   <option>Últimos 7 dias</option>
                   <option>Últimos 30 dias</option>

@@ -1,86 +1,260 @@
 
-import React, { useState } from 'react';
-import { Leaf, Settings, Handshake, Sparkles, ChevronLeft, ChevronRight, Home, Globe, TreeDeciduous, BoxSelect, Compass, LineChart, Share2 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Link, useLocation } from 'react-router-dom';
+import * as React from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import {
+  Activity,
+  AreaChart,
+  BarChart4,
+  Box,
+  ChevronDown,
+  ChevronRight,
+  Compass,
+  FileBarChart,
+  FileText,
+  Info,
+  Link,
+  Map,
+  Network,
+  Notebook,
+  PackageOpen,
+  PanelTop,
+  RectangleHorizontal,
+  Seedling,
+  Settings,
+  Store,
+  Users,
+} from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
+import { useMobile } from "@/hooks/use-mobile";
 
-interface SidebarProps {
-  className?: string;
-}
-
-export function Sidebar({ className }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false);
+export function Sidebar() {
+  const { isMobile, isSidebarOpen, setIsSidebarOpen } = useMobile();
   const location = useLocation();
-  
-  const navItems = [
-    { icon: Home, label: 'Dashboard', path: '/' },
-    { icon: Globe, label: 'Painéis Setoriais', path: '/observatory' },
-    { icon: BoxSelect, label: 'HUB Bioeconômico', path: '/hub' },
-    { icon: TreeDeciduous, label: 'BioVocação', path: '/vocation' },
-    { icon: Compass, label: 'Estratégias', path: '/strategies' },
-    { icon: Share2, label: 'Cadeia de Valor', path: '/valuechain' },
-    { icon: LineChart, label: 'Relatórios', path: '/reports' },
-  ];
+
+  React.useEffect(() => {
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
+  }, [location.pathname, isMobile, setIsSidebarOpen]);
+
+  if (isMobile && !isSidebarOpen) return null;
 
   return (
-    <div className={cn(
-      'flex flex-col h-screen bg-bio-green text-white transition-all duration-300 ease-in-out relative',
-      collapsed ? 'w-16' : 'w-64',
-      className
-    )}>
-      <div className="flex items-center justify-between p-4 border-b border-bio-green-dark">
-        <div className={cn('flex items-center overflow-hidden', collapsed ? 'justify-center w-full' : '')}>
-          <Leaf className="w-8 h-8 text-white" />
-          <span className={cn('ml-2 font-bold text-lg transition-opacity duration-300', 
-            collapsed ? 'opacity-0 w-0' : 'opacity-100'
-          )}>
-            BioECO
-          </span>
-        </div>
-        <button 
-          onClick={() => setCollapsed(!collapsed)}
-          className="p-1 rounded-full hover:bg-bio-green-dark transition-colors"
+    <div
+      className={cn(
+        "flex h-screen flex-col overflow-hidden border-r bg-white pb-6 transition-all",
+        isMobile
+          ? "absolute inset-y-0 z-50 w-3/4 animate-in slide-in-from-left-full"
+          : "w-64 shrink-0"
+      )}
+    >
+      <div className="flex h-16 items-center border-b px-4 py-4">
+        <NavLink
+          to="/"
+          className="flex items-center gap-2 font-semibold text-lg text-emerald-700"
         >
-          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-        </button>
+          <Seedling className="h-6 w-6" />
+          <span className="font-semibold">BioECO</span>
+        </NavLink>
       </div>
-      
-      <nav className="flex-1 py-4">
-        <ul className="space-y-2">
-          {navItems.map((item, index) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <li key={index}>
-                <Link 
-                  to={item.path}
-                  className={cn(
-                    'flex items-center py-3 px-4 transition-all duration-200 hover:bg-bio-green-dark/50',
-                    isActive ? 'bg-bio-green-dark' : 'bg-transparent'
-                  )}
+      <nav className="flex flex-col gap-1 p-2">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <PanelTop className="h-4 w-4" />
+          <span>Dashboard</span>
+        </NavLink>
+        <NavLink
+          to="/observatory"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <Map className="h-4 w-4" />
+          <span>Painéis Setoriais</span>
+        </NavLink>
+        <NavLink
+          to="/vocation"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <Compass className="h-4 w-4" />
+          <span>Vocação Bioeconômica</span>
+        </NavLink>
+        <NavLink
+          to="/hub"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <Network className="h-4 w-4" />
+          <span>HUB Bioeconômico</span>
+        </NavLink>
+        <NavLink
+          to="/valuechain"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <Store className="h-4 w-4" />
+          <span>Cadeia de Valor</span>
+        </NavLink>
+        <NavLink
+          to="/strategies"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <AreaChart className="h-4 w-4" />
+          <span>Estratégias</span>
+        </NavLink>
+        <NavLink
+          to="/reports"
+          className={({ isActive }) =>
+            cn(
+              "group flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <FileBarChart className="h-4 w-4" />
+          <span>Relatórios</span>
+        </NavLink>
+
+        <div className="mt-4">
+          <h4 className="mb-1 px-3 text-xs font-medium text-gray-500">
+            RECURSOS
+          </h4>
+          <Accordion type="single" collapsible defaultValue="links">
+            <AccordionItem value="links">
+              <AccordionTrigger className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 hover:no-underline hover:text-emerald-700">
+                <div className="flex items-center gap-2">
+                  <Link className="h-4 w-4" />
+                  <span>Links Úteis</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="ml-2 border-l pl-2 text-sm">
+                <a
+                  href="https://www.gov.br/mma/pt-br"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span className={cn('ml-4 transition-opacity duration-300', 
-                    collapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100'
-                  )}>
-                    {item.label}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-      
-      <div className="p-4 border-t border-bio-green-dark">
-        <div className={cn('flex items-center', collapsed ? 'justify-center' : '')}>
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-            <span className="text-sm font-medium">JD</span>
-          </div>
-          <div className={cn('ml-3 transition-opacity duration-300', collapsed ? 'opacity-0 w-0' : 'opacity-100')}>
-            <p className="text-sm font-medium">Marlos</p>
-            <p className="text-xs text-white/70">Admin</p>
-          </div>
+                  <Info className="h-4 w-4" />
+                  <span>Ministério do Meio Ambiente</span>
+                </a>
+                <a
+                  href="https://www.gov.br/mcti/pt-br"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
+                >
+                  <Info className="h-4 w-4" />
+                  <span>Ministério da Ciência e Tecnologia</span>
+                </a>
+                <a
+                  href="https://www.bndes.gov.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
+                >
+                  <Info className="h-4 w-4" />
+                  <span>BNDES</span>
+                </a>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="info">
+              <AccordionTrigger className="px-3 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50 hover:no-underline hover:text-emerald-700">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span>Documentos</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="ml-2 border-l pl-2 text-sm">
+                <a
+                  href="#"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
+                >
+                  <Info className="h-4 w-4" />
+                  <span>Decreto nº 12.044</span>
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
+                >
+                  <Info className="h-4 w-4" />
+                  <span>Estratégia Nacional de Bioeconomia</span>
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-gray-800 transition-all hover:bg-gray-50 hover:text-emerald-700"
+                >
+                  <Info className="h-4 w-4" />
+                  <span>Manual do Usuário</span>
+                </a>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
+      </nav>
+
+      <div className="mt-auto border-t pt-2">
+        <NavLink
+          to="/settings"
+          className={({ isActive }) =>
+            cn(
+              "group mx-2 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all hover:text-emerald-700",
+              isActive
+                ? "bg-emerald-50 text-emerald-700"
+                : "text-gray-800 hover:bg-gray-50"
+            )
+          }
+        >
+          <Settings className="h-4 w-4" />
+          <span>Configurações</span>
+        </NavLink>
       </div>
     </div>
   );
