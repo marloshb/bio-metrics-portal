@@ -40,7 +40,7 @@ const CommunityTracker = () => {
         />
       </div>
       
-      <div className="flex-1 min-h-[220px] mt-2">
+      <div className="flex-1 min-h-[180px] mt-2">
         <p className="text-sm font-medium mb-2">Community Income (Last 6 Months)</p>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -53,7 +53,7 @@ const CommunityTracker = () => {
               axisLine={false} 
               tickLine={false} 
               tickFormatter={(value) => `$${value/1000}k`} 
-              width={50}
+              width={40}
             />
             <Tooltip 
               formatter={(value: number, name: string) => [
@@ -72,16 +72,16 @@ const CommunityTracker = () => {
         </ResponsiveContainer>
       </div>
       
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-2 gap-4 mt-3">
         <div className="bio-card p-4 flex items-center">
-          <Medal className="w-8 h-8 text-bio-green mr-3" />
+          <Medal className="w-7 h-7 text-bio-green mr-3" />
           <div>
             <p className="text-xs text-gray-500">Top Community</p>
             <p className="text-sm font-semibold">Rio Verde Coop</p>
           </div>
         </div>
         <div className="bio-card p-4 flex items-center">
-          <Calendar className="w-8 h-8 text-bio-blue mr-3" />
+          <Calendar className="w-7 h-7 text-bio-blue mr-3" />
           <div>
             <p className="text-xs text-gray-500">Next Training</p>
             <p className="text-sm font-semibold">July 15, 2023</p>

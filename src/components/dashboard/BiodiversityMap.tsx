@@ -49,7 +49,7 @@ const BiodiversityMap = () => {
   }, []);
   
   return (
-    <div className="bio-card p-6 h-full">
+    <div className="bio-card p-6 h-full flex flex-col">
       <SectionTitle 
         title="Biodiversity Monitoring" 
         subtitle="Real-time monitoring of biodiversity hotspots"
@@ -63,7 +63,7 @@ const BiodiversityMap = () => {
       
       <div 
         ref={mapRef} 
-        className="relative h-[300px] bg-bio-blue-light/20 rounded-lg overflow-hidden border border-bio-blue/30"
+        className="relative flex-1 min-h-[200px] bg-bio-blue-light/20 rounded-lg overflow-hidden border border-bio-blue/30"
       >
         {/* Simulated Map Background - would be a real map in production */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMxLjIgMCAyLjMuNSAzLjIgMS4zLjkuOS0uNi0xLjEuNi0uMmwxOCAxOGMxLjcgMS44IDEuNyA0LjYgMCA2LjNsLTEyIDEyYy0xLjcgMS43LTQuNiAxLjctNi4zIDBsLTE4LTE4Yy0uOC0uOS0xLjMtMi0xLjMtMy4yVjEyYzAtMi4yIDEuOC00IDQtNGgyMnoiIHN0cm9rZT0iIzRGQzNGNyIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIuMiIvPjxjaXJjbGUgZmlsbD0iIzRGQzNGNyIgb3BhY2l0eT0iLjIiIGN4PSIxMiIgY3k9IjM2IiByPSIxMiIvPjxjaXJjbGUgZmlsbD0iIzJFN0QzMiIgb3BhY2l0eT0iLjIiIGN4PSI0OCIgY3k9IjEyIiByPSIxMiIvPjwvZz48L3N2Zz4=')] opacity-15"></div>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Sidebar } from '@/components/layout/Sidebar';
@@ -171,19 +170,19 @@ const Index = () => {
             
             {/* Dashboard grid */}
             <div className={cn(
-              "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:gap-6 transition-opacity duration-500",
+              "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 transition-opacity duration-500",
               isLoading ? "opacity-0" : "opacity-100"
             )}>
-              <div className="section-appear" style={{ "--appear-delay": 1 } as React.CSSProperties}>
+              <div className="section-appear h-[450px]" style={{ "--appear-delay": 1 } as React.CSSProperties}>
                 <BiodiversityMap />
               </div>
-              <div className="section-appear" style={{ "--appear-delay": 2 } as React.CSSProperties}>
+              <div className="section-appear h-[450px]" style={{ "--appear-delay": 2 } as React.CSSProperties}>
                 <SustainabilityChart />
               </div>
-              <div className="section-appear" style={{ "--appear-delay": 3 } as React.CSSProperties}>
+              <div className="section-appear h-[450px]" style={{ "--appear-delay": 3 } as React.CSSProperties}>
                 <CommunityTracker />
               </div>
-              <div className="section-appear" style={{ "--appear-delay": 4 } as React.CSSProperties}>
+              <div className="section-appear h-[450px]" style={{ "--appear-delay": 4 } as React.CSSProperties}>
                 <InnovationHub />
               </div>
             </div>

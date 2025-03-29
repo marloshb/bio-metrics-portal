@@ -38,7 +38,7 @@ const SustainabilityChart = () => {
         />
       </div>
       
-      <div className="flex-1 min-h-[250px]">
+      <div className="flex-1 min-h-[180px]">
         <p className="text-sm font-medium text-center mb-2">Resource Usage Distribution</p>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -46,8 +46,8 @@ const SustainabilityChart = () => {
               data={resourceData}
               cx="50%"
               cy="50%"
-              innerRadius={60}
-              outerRadius={90}
+              innerRadius={40}
+              outerRadius={70}
               paddingAngle={2}
               dataKey="value"
               animationDuration={1000}
@@ -70,22 +70,22 @@ const SustainabilityChart = () => {
               layout="horizontal" 
               verticalAlign="bottom" 
               align="center"
-              wrapperStyle={{ paddingTop: '20px' }}
+              wrapperStyle={{ paddingTop: '10px' }}
             />
           </PieChart>
         </ResponsiveContainer>
       </div>
       
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-2 gap-4 mt-3">
         <div className="bio-card p-4 flex items-center">
-          <CircleDollarSign className="w-8 h-8 text-bio-green mr-3" />
+          <CircleDollarSign className="w-7 h-7 text-bio-green mr-3" />
           <div>
             <p className="text-xs text-gray-500">Eco-Revenue</p>
             <p className="text-lg font-semibold">$12.8M</p>
           </div>
         </div>
         <div className="bio-card p-4 flex items-center">
-          <Droplets className="w-8 h-8 text-bio-blue mr-3" />
+          <Droplets className="w-7 h-7 text-bio-blue mr-3" />
           <div>
             <p className="text-xs text-gray-500">Water Saved</p>
             <p className="text-lg font-semibold">24.5M gal</p>
