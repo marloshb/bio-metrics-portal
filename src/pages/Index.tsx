@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import BiodiversityMap from '@/components/dashboard/BiodiversityMap';
 import SustainabilityChart from '@/components/dashboard/SustainabilityChart';
-import CommunityTracker from '@/components/dashboard/CommunityTracker';
+// import CommunityTracker from '@/components/dashboard/CommunityTracker';
 import InnovationHub from '@/components/dashboard/InnovationHub';
 import { Bell, Search, BarChart3, Info, Calendar, Leaf, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -173,9 +173,9 @@ const Index = () => {
             <div className="section-appear" style={{ "--appear-delay": 2 } as React.CSSProperties}>
               <SustainabilityChart />
             </div>
-            <div className="section-appear" style={{ "--appear-delay": 3 } as React.CSSProperties}>
-              <CommunityTracker />
-            </div>
+            //<div className="section-appear" style={{ "--appear-delay": 3 } as React.CSSProperties}>
+            //  <CommunityTracker />
+            //</div>
             <div className="section-appear" style={{ "--appear-delay": 4 } as React.CSSProperties}>
               <InnovationHub />
             </div>
