@@ -2,12 +2,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import PDCACycle from '@/components/strategies/PDCACycle';
 import BiodiversityActivities from '@/components/strategies/BiodiversityActivities';
 import SocialEnvironmentalActions from '@/components/strategies/SocialEnvironmentalActions';
